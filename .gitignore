@@ -1,0 +1,5 @@
+#carpetas
+.vscode/*
+bin/*
+obj/*
+

@@ -15,6 +15,34 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = E:\Repos\C#\EscuelaWeb\EscuelaWeb
 build_property._RazorSourceGeneratorDebug = 
 
+[E:/Repos/C\#/EscuelaWeb/EscuelaWeb/Views/Alumno/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWx1bW5vXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Repos/C\#/EscuelaWeb/EscuelaWeb/Views/Alumno/MultiAlumno.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWx1bW5vXE11bHRpQWx1bW5vLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Repos/C\#/EscuelaWeb/EscuelaWeb/Views/Asignatura/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpZ25hdHVyYVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Repos/C\#/EscuelaWeb/EscuelaWeb/Views/Asignatura/MultiAsignatura.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpZ25hdHVyYVxNdWx0aUFzaWduYXR1cmEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Repos/C\#/EscuelaWeb/EscuelaWeb/Views/Curso/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3Vyc29cQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Repos/C\#/EscuelaWeb/EscuelaWeb/Views/Curso/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3Vyc29cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Repos/C\#/EscuelaWeb/EscuelaWeb/Views/Curso/MultiCurso.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3Vyc29cTXVsdGlDdXJzby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Repos/C\#/EscuelaWeb/EscuelaWeb/Views/Escuela/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXNjdWVsYVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -25,6 +53,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/Repos/C\#/EscuelaWeb/EscuelaWeb/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Repos/C\#/EscuelaWeb/EscuelaWeb/Views/Shared/_ListaObjetosEscuela.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MaXN0YU9iamV0b3NFc2N1ZWxhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Repos/C\#/EscuelaWeb/EscuelaWeb/Views/Shared/_ValidationScriptsPartial.cshtml]

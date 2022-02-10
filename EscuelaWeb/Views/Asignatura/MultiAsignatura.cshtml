@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Asignatura>;
+@{
+    ViewData["Title"] = "Información de las Asignaturas";
+}
+<h2>@ViewData["Title"]</h2>
+<strong>Listado de todas las asignaturas</strong>
+<p><i>@ViewBag.Fecha</i></p>
+<partial name="_ListaObjetosEscuela" model="@Model" />

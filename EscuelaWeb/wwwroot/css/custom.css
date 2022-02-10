@@ -1,0 +1,13 @@
+﻿thead{
+    text-align:center;
+    background-color:black;
+    color:white;
+}
+
+th, td{
+    text-align:center;
+}
+
+.btn-primary-custom{
+    margin: 20px 20px 20px 0 !important;
+}

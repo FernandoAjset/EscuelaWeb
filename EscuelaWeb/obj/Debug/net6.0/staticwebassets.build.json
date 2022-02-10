@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "b/C7eWti1EgTCuaJa0fF/UFc9+Ilq/gX3DT6RGcU5QM=",
+  "Hash": "O74HsPB5YnVx76krquSHS3bd9gfxA0N6zCBXAdSDuk8=",
   "Source": "EscuelaWeb",
   "BasePath": "_content/EscuelaWeb",
   "Mode": "Default",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\Repos\\C#\\EscuelaWeb\\EscuelaWeb\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\EscuelaWeb.bundle.scp.css"
+    },
+    {
+      "Identity": "E:\\Repos\\C#\\EscuelaWeb\\EscuelaWeb\\wwwroot\\css\\custom.css",
+      "SourceId": "EscuelaWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Repos\\C#\\EscuelaWeb\\EscuelaWeb\\wwwroot\\",
+      "BasePath": "_content/EscuelaWeb",
+      "RelativePath": "css/custom.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\custom.css"
     },
     {
       "Identity": "E:\\Repos\\C#\\EscuelaWeb\\EscuelaWeb\\wwwroot\\css\\site.css",

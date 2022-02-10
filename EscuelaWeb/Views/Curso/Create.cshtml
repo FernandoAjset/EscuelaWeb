@@ -1,0 +1,28 @@
+﻿@model Curso;
+@{
+    ViewData["Title"] = "Creación de Curso";
+}
+<h2>@ViewData["Title"]</h2>
+<p><i>@ViewBag.Fecha</i></p>
+<div class="text-danger" asp-validation-summary="All"></div>
+<form method="POST">
+    <div class="form-group">
+        <label asp-for="Nombre"></label>
+        <input class="form-control" asp-for="Nombre" />
+        <label asp-for="Jornada"></label>
+        @Html.DropDownList(
+        "Jornada",
+        Html.GetEnumSelectList<TiposJornada>(),
+        "Seleccione una jornada",
+        new{@class="form-control"}
+        )
+    </div>
+    <input class="btn btn-primary btn-primary-custom" type="submit" /></a>
+    <input class="btn btn-info btn-primary-custom" type="submit" asp-action="MultiCurso" value="Ver cursos" />
+</form>
+@if (ViewBag.MensajeExito != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.MensajeExito
+    </div>
+}   

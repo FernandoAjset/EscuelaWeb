@@ -14,7 +14,6 @@ namespace EscuelaWeb.Models
         {
 
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -27,16 +26,16 @@ namespace EscuelaWeb.Models
             escuela.Ciudad = "Bogota";
             escuela.Pais = "Colombia";
             escuela.TipoEscuela = TiposEscuela.Secundaria;
-            
+
 
             //Cargar cursos de la escuela
             var cursos = CargarCursos(escuela);
 
             //por cada curso cargar asignatura
-            var asignaturas=CargarAsignaturas(cursos);
+            var asignaturas = CargarAsignaturas(cursos);
 
             //por cada curso cargar alumnos
-            var alumnos=CargarAlumnos(cursos);
+            var alumnos = CargarAlumnos(cursos);
 
             //Sembrando datos a la BD en memoria
             modelBuilder.Entity<Escuela>().HasData(escuela);
@@ -44,7 +43,6 @@ namespace EscuelaWeb.Models
             modelBuilder.Entity<Asignatura>().HasData(asignaturas.ToArray());
             modelBuilder.Entity<Alumno>().HasData(alumnos.ToArray());
         }
-
         public static List<Curso> CargarCursos(Escuela escuela)
         {
             var cursosEscuela = new List<Curso>() {
@@ -53,13 +51,24 @@ namespace EscuelaWeb.Models
                 new Curso(){Id=Guid.NewGuid().ToString(), EscuelaId=escuela.Id, Nombre="301", Jornada=TiposJornada.Mañana},
                 new Curso(){Id=Guid.NewGuid().ToString(), EscuelaId=escuela.Id, Nombre="401", Jornada=TiposJornada.Tarde},
                 new Curso(){Id=Guid.NewGuid().ToString(), EscuelaId=escuela.Id, Nombre="501", Jornada=TiposJornada.Noche},
+
+                new Curso(){Id=Guid.NewGuid().ToString(), EscuelaId=escuela.Id, Nombre="Programación I", Jornada=TiposJornada.Mañana},
+                new Curso(){Id=Guid.NewGuid().ToString(), EscuelaId=escuela.Id, Nombre="Programación II", Jornada=TiposJornada.Tarde},
+                new Curso(){Id=Guid.NewGuid().ToString(), EscuelaId=escuela.Id, Nombre="Programación III", Jornada=TiposJornada.Mañana},
+                new Curso(){Id=Guid.NewGuid().ToString(), EscuelaId=escuela.Id, Nombre="Bases de datos I", Jornada=TiposJornada.Tarde},
+                new Curso(){Id=Guid.NewGuid().ToString(), EscuelaId=escuela.Id, Nombre="Bases de datos II", Jornada=TiposJornada.Noche},
+                new Curso(){Id=Guid.NewGuid().ToString(), EscuelaId=escuela.Id, Nombre="Sistemas operativos I", Jornada=TiposJornada.Mañana},
+                new Curso(){Id=Guid.NewGuid().ToString(), EscuelaId=escuela.Id, Nombre="Calculo I", Jornada=TiposJornada.Tarde},
+                new Curso(){Id=Guid.NewGuid().ToString(), EscuelaId=escuela.Id, Nombre="Calculo II", Jornada=TiposJornada.Mañana},
+                new Curso(){Id=Guid.NewGuid().ToString(), EscuelaId=escuela.Id, Nombre="Autómatas", Jornada=TiposJornada.Tarde},
+                new Curso(){Id=Guid.NewGuid().ToString(), EscuelaId=escuela.Id, Nombre="Electrónica Analógica", Jornada=TiposJornada.Noche},
             };
             return cursosEscuela;
         }
 
         public static List<Asignatura> CargarAsignaturas(List<Curso> cursos)
         {
-            var listaAsignaturas = new List<Asignatura>(); 
+            var listaAsignaturas = new List<Asignatura>();
             foreach (var curso in cursos)
             {
                 var listaTemporal = new List<Asignatura>() {
@@ -97,12 +106,12 @@ namespace EscuelaWeb.Models
                 listaAsignaturas.AddRange(listaTemporal);
 
             }
-            return listaAsignaturas; 
+            return listaAsignaturas;
         }
-    
+
         private List<Alumno> CargarAlumnos(List<Curso> cursos)
         {
-            var listaAlumnos=new List<Alumno>(); 
+            var listaAlumnos = new List<Alumno>();
             Random rnd = new Random();
 
             foreach (var curso in cursos)
@@ -113,5 +122,6 @@ namespace EscuelaWeb.Models
             }
             return listaAlumnos;
         }
-    }    
+
+    }
 }

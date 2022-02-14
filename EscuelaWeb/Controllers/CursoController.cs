@@ -13,17 +13,14 @@ namespace EscuelaWeb.Controllers
         {
             context = _context;
         }
-
-        //[Route("Curso/{Id?}")]
-        //[Route("Curso/Index/{Id?}")]
         public IActionResult Index(string Id)
         {
             ViewBag.Fecha = DateTime.Now.ToString();
             if (!string.IsNullOrEmpty(Id))
             {
                 var cursos = from curso in context.Cursos
-                                 where curso.Id == Id
-                                 select curso;
+                             where curso.Id == Id
+                             select curso;
                 if (cursos.SingleOrDefault() != null)
                     return View(cursos.SingleOrDefault());
                 else
@@ -34,11 +31,29 @@ namespace EscuelaWeb.Controllers
                 return View("MultiCurso", context.Cursos);
             }
         }
-        public IActionResult MultiCurso()
+        public IActionResult MultiCurso(int pagina = 1)
         {
-            var listaCursos = context.Cursos;
+            var cantidadRegistrosPorPagina = 10;
+            var listaCursos = context.Cursos
+                //make sure to order items before paging
+                .OrderBy(x => x.Nombre)
+
+                //skip items before current page
+                .Skip((pagina - 1) * cantidadRegistrosPorPagina)
+
+                //take only 10 (page size) items
+                .Take(cantidadRegistrosPorPagina)
+
+                //call ToList() at the end to execute the query and return the result set
+                .ToList();
+            var totalDeRegistros = context.Cursos.Count();
+            var modelo = new ListaViewModel();
+            modelo.listado = listaCursos;
+            modelo.PaginaActual = pagina;
+            modelo.TotalDeRegistros = totalDeRegistros;
+            modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
             ViewBag.Fecha = DateTime.Now.ToString();
-            return View(listaCursos);
+            return View(modelo);
         }
         public IActionResult Create()
         {
@@ -46,23 +61,73 @@ namespace EscuelaWeb.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Curso curso)
+        public IActionResult Create(Curso nuevoCurso)
         {
             ViewBag.Fecha = DateTime.Now.ToString();
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var escuela = context.Escuelas.FirstOrDefault();
-                curso.EscuelaId = escuela.Id;
-                context.Cursos.Add(curso);
-                context.SaveChanges();
-                ViewBag.MensajeExito = $"{curso.GetType().Name} creado exitosamente";
-                //return View("Index",curso);
-                return View();
+                return View(nuevoCurso);
             }
+            var existe = from curso in context.Cursos
+                         where curso.Nombre == nuevoCurso.Nombre
+                         && curso.Jornada == nuevoCurso.Jornada
+                         select curso;
+
+            if (existe.Any())
+            {
+                ModelState.AddModelError(nameof(nuevoCurso.Nombre),
+                    $"Ya existe un curso con nombre {nuevoCurso.Nombre}" +
+                    $" y jornada {nuevoCurso.Jornada}");
+                return View(nuevoCurso);
+            }
+            var escuela = context.Escuelas.FirstOrDefault();
+            nuevoCurso.EscuelaId = escuela.Id;
+            context.Cursos.Add(nuevoCurso);
+            context.SaveChanges();
+            ViewBag.MensajeExito = "Curso creado";
+            return View("Index", nuevoCurso);
+        }
+        [HttpGet]
+        public IActionResult Editar(string Id)
+        {
+            ViewBag.Fecha = DateTime.Now.ToString();
+            var cursos = from curso in context.Cursos
+                         where curso.Id == Id
+                         select curso;
+            var cursoSelec = cursos.SingleOrDefault();
+            if (cursoSelec != null)
+                return View(cursos.SingleOrDefault());
             else
+                return View("NoEncontrado");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Editar(Curso cursoEdit)
+        {
+            if (!ModelState.IsValid)
             {
-                return View(curso);
+                return View(cursoEdit);
             }
+            var existe = from curso in context.Cursos
+                         where curso.Nombre == cursoEdit.Nombre
+                         && curso.Jornada == cursoEdit.Jornada
+                         select curso;
+
+            if (existe.Any())
+            {
+                ModelState.AddModelError(nameof(cursoEdit.Nombre),
+                    $"Ya existe un curso con nombre {cursoEdit.Nombre}" +
+                    $" y jornada {cursoEdit.Jornada}");
+                return View(cursoEdit);
+            }
+            if (existe is null)
+                return View("NoEncontrado");
+
+            var escuela = context.Escuelas.FirstOrDefault();
+            cursoEdit.EscuelaId = escuela.Id;
+            context.Cursos.Update(cursoEdit);
+            context.SaveChanges();
+            ViewBag.MensajeExito = "Curso actualizado";
+            return View("Index", cursoEdit);
         }
     }
 }

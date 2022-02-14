@@ -1,0 +1,29 @@
+﻿@model BaseModelo
+
+@{
+    var cantidadPaginas = (int)Math.Ceiling((double)Model.TotalDeRegistros / Model.RegistrosPorPagina);
+}
+
+<!--Funcionalidad: Anterior y siguiente-->
+<nav aria-label="Paginacion listado">
+    <ul class="pagination">
+        @if (Model.PaginaActual == 1)
+        {
+            <li class="disable">@Html.ActionLink("Anterior", null, new{pagina=1}, new{@class="page-link"})</li>
+        }
+        else
+        {
+            <li class="page-item">@Html.ActionLink("Anterior", null, new{pagina=Model.PaginaActual-1}, new{@class="page-link"})</li>
+        }
+
+        @if (Model.PaginaActual == cantidadPaginas)
+        {
+            <li class="page-item">@Html.ActionLink("Siguiente", null, new{pagina=cantidadPaginas}, new{@class="page-link"})</li>
+        }
+        else
+        {
+            <li class="page-item">@Html.ActionLink("Siguiente", null, new{pagina=Model.PaginaActual+1}, new{@class="page-link"})</li>
+        }
+    </ul>
+</nav>
+

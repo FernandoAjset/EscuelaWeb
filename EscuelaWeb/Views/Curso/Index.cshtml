@@ -3,12 +3,12 @@
     ViewData["Title"] = "Información Curso";
 }
 <h2>@ViewData["Title"]</h2>
-@*<h2>@ViewBag.MensajeExito</h2>*@
-
-
-
+<div class="alert alert-success">
+    <span>@ViewBag.MensajeExito</span>
+</div>
 <p><i>@ViewBag.Fecha</i></p>
-    <p>
-        Nombre: @Model.Nombre<br/>
-        Id curso: @Model.Id
-    </p>
+<p>
+    Nombre: @Model.Nombre<br />
+    Id curso: @Model.Id
+</p>
+<a class="btn btn-info btn-primary-custom" asp-action="MultiCurso">Ver Cursos</a>

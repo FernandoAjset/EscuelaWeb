@@ -4,11 +4,13 @@
 }
 <h2>@ViewData["Title"]</h2>
 <p><i>@ViewBag.Fecha</i></p>
-<div class="text-danger" asp-validation-summary="All"></div>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 <form method="POST">
     <div class="form-group">
         <label asp-for="Nombre"></label>
         <input class="form-control" asp-for="Nombre" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+        <br />
         <label asp-for="Jornada"></label>
         @Html.DropDownList(
         "Jornada",
@@ -16,13 +18,12 @@
         "Seleccione una jornada",
         new{@class="form-control"}
         )
+        <span asp-validation-for="Jornada" class="text-danger"></span>
+        <br />
+        <button type="submit" class="btn btn-primary">Enviar</button>
+        <a class="btn btn-info btn-primary-custom" asp-action="MultiCurso">Ver Cursos</a>
     </div>
-    <input class="btn btn-primary btn-primary-custom" type="submit" /></a>
-    <input class="btn btn-info btn-primary-custom" type="submit" asp-action="MultiCurso" value="Ver cursos" />
 </form>
-@if (ViewBag.MensajeExito != null)
-{
-    <div class="alert alert-success" role="alert">
-        @ViewBag.MensajeExito
-    </div>
-}   
+@section Scripts{
+<partial name="_ValidationScriptsPartial" />
+}

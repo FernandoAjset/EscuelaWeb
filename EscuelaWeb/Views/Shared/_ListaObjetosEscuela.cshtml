@@ -1,24 +1,28 @@
-﻿@model IEnumerable<ObjetoEscuelaBase>;
-<table class="table table-striped table-hover">
+﻿@model ListaViewModel
+
+<table class="table table-sm table-hover">
     <thead class="thead-dark">
         <tr>
-            <th scoope="col">No.</th>
             <th scoope="col">Nombre</th>
             <th scoope="col">Id</th>
+            <th scoope="col">Acciones</th>
         </tr>
     </thead>
     <tbody>
-        @{
-            int cont=1;
-        }
-        @foreach (var obj in Model)
+        @foreach (var obj in Model.listado)
         {
             <tr>
-                <th scope="row">@cont</th>
                 <td>@obj.Nombre</td>
                 <td>@obj.Id</td>
+                <td>
+                    <input type="hidden" value="@obj.Id" class="ids" />
+                    <a class="btn btn-primary" asp-action="Editar" asp-route-id="@obj.Id">Editar<i class="bi bi-pencil-square"></i></a>
+                    <a class="btn btn-danger" asp-action="Borrar" asp-route-id="@obj.Id">Borrar<i class="bi bi-trash3-fill"></i></a>
+                </td>
             </tr>
-            cont++;
         }
     </tbody>
 </table>
+@{
+    Html.RenderPartial("_paginador", Model);
+}

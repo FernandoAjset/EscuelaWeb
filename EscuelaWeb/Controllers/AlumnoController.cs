@@ -2,6 +2,7 @@
 using EscuelaWeb.Servicios;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace EscuelaWeb.Controllers
 {
@@ -148,6 +149,22 @@ namespace EscuelaWeb.Controllers
             context.Alumnos.Remove(alumno.FirstOrDefault());
             context.SaveChanges();
             return View("Index", alumnoEliminado);
+        }
+        [HttpGet]
+        public IActionResult NombreAlumnoValida(string nombre)
+        {
+            if (string.IsNullOrEmpty(nombre))
+                return View();
+            string pattern = @"^([A-Z]{1}[a-z]+[\s]?){2,}$";
+            Regex rg = new Regex(pattern);
+            bool valido = Regex.IsMatch(nombre, pattern);
+            if (!valido)
+                return Json($"El nombre no es valido, un nombre valido debe cumplir: \n" +
+                    $"1.Tener al menos un nombre y un apellido, \n" +
+                    $"2.El Nombre y apellido deben empezar con Mayuscula, \n" +
+                    $"3.No tener espacios despues del apellido, \n" +
+                    $"4.No puede incluir números ni simbolos");
+            return Json("true");
         }
     }
 }

@@ -12,9 +12,6 @@ namespace EscuelaWeb.Controllers
         {
             context = _context;
         }
-
-        //Especifíca como va la ruta en el navegador, "?" significa que puede o no llevar Id
-        [Route("Asignatura/Index/{asignaturaId?}")] 
         public IActionResult Index(string asignaturaId)
         {
             ViewBag.Fecha = DateTime.Now.ToString();
@@ -33,12 +30,29 @@ namespace EscuelaWeb.Controllers
                 return View("Multiasignatura", context.Asignaturas);
             }
         }
-        public IActionResult MultiAsignatura()
+        public IActionResult MultiAsignatura(int pagina = 1)
         {
-            var listaAsignaturas = context.Asignaturas;
+            var cantidadRegistrosPorPagina = 10;
+            var listaAsignaturas = context.Asignaturas
+                //make sure to order items before paging
+                .OrderBy(x => x.Curso.Nombre)
 
+                //skip items before current page
+                .Skip((pagina - 1) * cantidadRegistrosPorPagina)
+
+                //take only 10 (page size) items
+                .Take(cantidadRegistrosPorPagina)
+
+                //call ToList() at the end to execute the query and return the result set
+                .ToList();
+            var totalDeRegistros = context.Asignaturas.Count();
+            var modelo = new ListaViewModel();
+            modelo.listado = listaAsignaturas;
+            modelo.PaginaActual = pagina;
+            modelo.TotalDeRegistros = totalDeRegistros;
+            modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
             ViewBag.Fecha = DateTime.Now.ToString();
-            return View(listaAsignaturas);
+            return View(modelo);
         }
     }
 }

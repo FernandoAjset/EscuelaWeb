@@ -1,0 +1,21 @@
+﻿@model Curso;
+@{
+    ViewData["Title"] = "Borrar Curso";
+}
+<h2>@ViewData["Title"]</h2>
+<p><i>@ViewBag.Fecha</i></p>
+<form method="POST">
+    <div class="form-group">
+        <label asp-for"Nombre"></label>
+        Nombre: @Model.Nombre<br />
+        <label asp-for"Id"></label>
+        Id curso: @Model.Id<br />
+        <label asp-for"Jornada"></label>
+        Jornada: @Model.Jornada
+    </div>
+    <div class="alert alert-danger">
+        <span>@ViewBag.MensajeBorrado</span>
+    </div>
+    <a class="btn btn-info btn-primary-custom" asp-action="MultiCurso">Cancelar</a>
+    <button type="submit" class="btn btn-danger btn-primary-custom" asp-action="Borrar">Borrar</button>
+</form>

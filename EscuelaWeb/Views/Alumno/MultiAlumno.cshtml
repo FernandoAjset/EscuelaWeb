@@ -5,4 +5,7 @@
 <h2>@ViewData["Title"]</h2>
 <strong>Listado de todos los alumnos</strong>
 <p><i>@ViewBag.Fecha</i></p>
-<partial name="_ListaObjetosEscuela" model="@Model" />
+<form method="POST">
+<input class="btn btn-success btn-primary-custom" type="submit" asp-action="Create" value="Crear nuevo alumno"/>
+</form>
+<partial name="_ListaAlumnos" model="@Model" />

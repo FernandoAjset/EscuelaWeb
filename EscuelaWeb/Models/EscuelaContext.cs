@@ -76,30 +76,35 @@ namespace EscuelaWeb.Models
                             {
                                 Nombre = "Matemáticas",
                                 CursoId=curso.Id,
+                                CursoNombre=curso.Nombre,
                                 Id = Guid.NewGuid().ToString()
                             },
                             new Asignatura
                             {
                                 Nombre = "Educación Física",
                                 CursoId=curso.Id,
+                                CursoNombre=curso.Nombre,
                                 Id = Guid.NewGuid().ToString()
                             },
                             new Asignatura
                             {
                                 Nombre = "Castellano",
                                 CursoId=curso.Id,
+                                CursoNombre=curso.Nombre,
                                 Id = Guid.NewGuid().ToString()
                             },
                             new Asignatura
                             {
                                 Nombre = "Ciencias Naturales",
                                 CursoId=curso.Id,
+                                CursoNombre=curso.Nombre,
                                 Id = Guid.NewGuid().ToString()
                             },
                             new Asignatura
                             {
                                 Nombre = "Programación",
                                 CursoId=curso.Id,
+                                CursoNombre=curso.Nombre,
                                 Id = Guid.NewGuid().ToString()
                             }
                 };

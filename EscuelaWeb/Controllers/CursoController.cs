@@ -37,13 +37,10 @@ namespace EscuelaWeb.Controllers
             var listaCursos = context.Cursos
                 //make sure to order items before paging
                 .OrderBy(x => x.Nombre)
-
                 //skip items before current page
                 .Skip((pagina - 1) * cantidadRegistrosPorPagina)
-
                 //take only 10 (page size) items
                 .Take(cantidadRegistrosPorPagina)
-
                 //call ToList() at the end to execute the query and return the result set
                 .ToList();
             var totalDeRegistros = context.Cursos.Count();
@@ -101,7 +98,7 @@ namespace EscuelaWeb.Controllers
                 return View("NoEncontrado");
         }
         [HttpPost]
-        public async Task<IActionResult> Editar(Curso cursoEdit)
+        public IActionResult Editar(Curso cursoEdit)
         {
             if (!ModelState.IsValid)
             {
@@ -128,6 +125,38 @@ namespace EscuelaWeb.Controllers
             context.SaveChanges();
             ViewBag.MensajeExito = "Curso actualizado";
             return View("Index", cursoEdit);
+        }
+        [HttpGet]
+        public IActionResult Borrar(string id)
+        {
+            var curso = from cur in context.Cursos
+                        where id == cur.Id
+                        select cur;
+            if (!curso.Any())
+            {
+                return View("NoEncontrado");
+            }
+            ViewBag.MensajeBorrado = "¿Está seguro que desea eliminar este curso?";
+            return View("Borrar", curso.FirstOrDefault());
+
+        }
+        [HttpPost]
+        public IActionResult Borrar(Curso cursoBorrar)
+        {
+            var curso = from cur in context.Cursos
+                        where cursoBorrar.Id == cur.Id
+                        select cur;
+            if (!curso.Any())
+                return View("NoEncontrado");
+
+            ViewBag.MensajeBorrado = "Se eliminó el curso";
+            var cursoEliminado = new Curso();
+            cursoEliminado.Id = curso.FirstOrDefault().Id;
+            cursoEliminado.Nombre = curso.FirstOrDefault().Nombre;
+            cursoEliminado.Jornada = curso.FirstOrDefault().Jornada;
+            context.Cursos.Remove(curso.FirstOrDefault());
+            context.SaveChanges();
+            return View("Index", cursoEliminado);
         }
     }
 }

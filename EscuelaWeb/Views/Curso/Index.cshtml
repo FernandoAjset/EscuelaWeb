@@ -3,12 +3,26 @@
     ViewData["Title"] = "Información Curso";
 }
 <h2>@ViewData["Title"]</h2>
-<div class="alert alert-success">
-    <span>@ViewBag.MensajeExito</span>
-</div>
+@{
+    string mensajeExito = ViewBag.MensajeExito;
+    string mensajeBorrado = ViewBag.MensajeBorrado;
+    if (mensajeExito != null)
+    {
+        <div class="alert alert-success">
+            <span>@ViewBag.MensajeExito</span>
+        </div>
+    }
+    if (mensajeBorrado != null)
+    {
+        <div class="alert alert-danger">
+            <span>@ViewBag.MensajeBorrado</span>
+        </div>
+    }
+}
 <p><i>@ViewBag.Fecha</i></p>
 <p>
     Nombre: @Model.Nombre<br />
-    Id curso: @Model.Id
+    Id curso: @Model.Id<br />
+    Jornada: @Model.Jornada
 </p>
 <a class="btn btn-info btn-primary-custom" asp-action="MultiCurso">Ver Cursos</a>

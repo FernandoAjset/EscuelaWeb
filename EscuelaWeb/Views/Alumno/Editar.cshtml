@@ -1,0 +1,23 @@
+﻿@model Alumno;
+@{
+    ViewData["Title"] = "Edición de Alumno";
+}
+<h2>@ViewData["Title"]</h2>
+<p><i>@ViewBag.Fecha</i></p>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form method="POST">
+    <div class="form-group">
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label asp-for="Nombre" class="form-label"></label>
+            <input type="text" asp-for="Nombre" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+            <br />
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+        <a class="btn btn-secondary" asp-action="MultiAlumno">Cancelar</a>
+    </div>
+</form>
+@section Scripts{
+<partial name="_ValidationScriptsPartial" />
+}

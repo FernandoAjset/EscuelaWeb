@@ -1,0 +1,28 @@
+﻿@model ListaViewModel
+
+<table class="table table-sm table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scoope="col">Nombre del curso</th>
+            <th scoope="col">Id del curso</th>
+            <th scope="col">Jornada</th>
+            <th scoope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Curso obj in Model.listado)
+        {
+            <tr>
+                <td>@obj.Nombre</td>
+                <td>@obj.Id</td>
+                <td>@obj.Jornada</td>
+                <td>
+                    <input type="hidden" value="@obj.Id" class="ids" />
+                    <a class="btn btn-primary" asp-action="Editar" asp-route-id="@obj.Id">Editar<i class="bi bi-pencil-square"></i></a>
+                    <a class="btn btn-danger" asp-action="Borrar" asp-route-id="@obj.Id">Borrar<i class="bi bi-trash3-fill"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<partial name="_paginador" model=@Model />

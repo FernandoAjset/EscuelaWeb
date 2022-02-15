@@ -10,7 +10,6 @@ namespace EscuelaWeb.Models
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [StringLength(maximumLength: 50, MinimumLength = 3, ErrorMessage = "La longitud del campo " +
     "{0} debe estar entre {2} y {1}")]
-        //[Remote(action: "VerificarExisteCurso", controller: "Curso")]
         public override string Nombre { get; set; }
         [Required(ErrorMessage ="Seleccione una jornada")]
         public TiposJornada Jornada { get; set; }

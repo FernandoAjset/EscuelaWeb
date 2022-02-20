@@ -2,6 +2,10 @@
 @{
     ViewData["Title"] = "Borrar Curso";
 }
+@{
+    string borradoPersonalizado = ViewBag.MensajeBorradoPersonalizado;
+    string borrado = ViewBag.MensajeBorrado;
+}
 <h2>@ViewData["Title"]</h2>
 <p><i>@ViewBag.Fecha</i></p>
 <form method="POST">
@@ -13,9 +17,25 @@
         <label asp-for"Jornada"></label>
         Jornada: @Model.Jornada
     </div>
-    <div class="alert alert-danger">
-        <span>@ViewBag.MensajeBorrado</span>
-    </div>
-    <a class="btn btn-info btn-primary-custom" asp-action="MultiCurso">Cancelar</a>
-    <button type="submit" class="btn btn-danger btn-primary-custom" asp-action="Borrar">Borrar</button>
+    <br />
+    @if (!string.IsNullOrEmpty(borrado))
+    {
+        <div class="alert alert-warning">
+            <span>@borrado</span>
+        </div>
+    }
+    else if (!string.IsNullOrEmpty(borradoPersonalizado))
+    {
+        <div class="alert alert-danger">
+            <span>@borradoPersonalizado</span>
+        </div>
+    }
+
+    <a class="btn btn-info btn-primary-custom" asp-action="MultiCurso">Volver</a>
+    @{
+        if (string.IsNullOrEmpty(borradoPersonalizado))
+        {
+            <button type="submit" class="btn btn-danger btn-primary-custom" asp-action="Borrar">Borrar</button>
+        }
+    }
 </form>

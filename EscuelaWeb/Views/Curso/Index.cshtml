@@ -5,17 +5,17 @@
 <h2>@ViewData["Title"]</h2>
 @{
     string mensajeExito = ViewBag.MensajeExito;
-    string mensajeBorrado = ViewBag.MensajeBorrado;
+    string mensajeError = ViewBag.MensajeErrorPersonalizado;
     if (mensajeExito != null)
     {
         <div class="alert alert-success">
             <span>@ViewBag.MensajeExito</span>
         </div>
     }
-    if (mensajeBorrado != null)
+    if (mensajeError != null)
     {
         <div class="alert alert-danger">
-            <span>@ViewBag.MensajeBorrado</span>
+            <span>@ViewBag.MensajeErrorPersonalizado</span>
         </div>
     }
 }

@@ -2,6 +2,8 @@
 using EscuelaWeb.Servicios;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace EscuelaWeb.Controllers
 {
@@ -136,9 +138,17 @@ namespace EscuelaWeb.Controllers
             {
                 return View("NoEncontrado");
             }
+            var alumnos = from alum in context.Alumnos
+                          where alum.CursoId == curso.FirstOrDefault().Id
+                          select alum;
+            int numeroAlumnos = alumnos.Count();
+            if (numeroAlumnos > 0)
+            {
+                ViewBag.MensajeBorradoPersonalizado = $"No se puede borrar el curso porque tiene {numeroAlumnos} alumnos asignados";
+                return View("Borrar", curso.FirstOrDefault());
+            }
             ViewBag.MensajeBorrado = "¿Está seguro que desea eliminar este curso?";
             return View("Borrar", curso.FirstOrDefault());
-
         }
         [HttpPost]
         public IActionResult Borrar(Curso cursoBorrar)
@@ -149,14 +159,22 @@ namespace EscuelaWeb.Controllers
             if (!curso.Any())
                 return View("NoEncontrado");
 
-            ViewBag.MensajeBorrado = "Se eliminó el curso";
             var cursoEliminado = new Curso();
             cursoEliminado.Id = curso.FirstOrDefault().Id;
             cursoEliminado.Nombre = curso.FirstOrDefault().Nombre;
             cursoEliminado.Jornada = curso.FirstOrDefault().Jornada;
-            context.Cursos.Remove(curso.FirstOrDefault());
-            context.SaveChanges();
-            return View("Index", cursoEliminado);
+            try
+            {
+                ViewBag.MensajeExito = "Se eliminó el curso";
+                context.Cursos.Remove(curso.FirstOrDefault());
+                context.SaveChanges();
+                return View("Index", cursoEliminado);
+            }
+            catch (DbUpdateException)
+            {
+                ViewBag.MensajeErrorPersonalizado = "No se pudo actualizar la BD, revise la información del curso";
+                return View("Index", cursoEliminado);
+            }
         }
     }
 }

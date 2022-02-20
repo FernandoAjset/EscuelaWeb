@@ -18,6 +18,7 @@ namespace EscuelaWeb.Models
             connectionString = Configuration.GetConnectionString("DefaultConnection");
         }
 
+        //Sobreescritura de método para configurar la conexión, extrayendo la cadena del Configuration
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder

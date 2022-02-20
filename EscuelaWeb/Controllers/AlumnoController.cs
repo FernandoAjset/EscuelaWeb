@@ -133,7 +133,7 @@ namespace EscuelaWeb.Controllers
             if (!alumno.Any())
                 return View("NoEncontrado");
 
-            ViewBag.MensajeBorrado = "Se eliminó el alumno";
+            ViewBag.MensajeExito = "Se eliminó el alumno";
             var alumnoEliminado = new Alumno();
             alumnoEliminado.Id = alumno.FirstOrDefault().Id;
             alumnoEliminado.Nombre = alumno.FirstOrDefault().Nombre;

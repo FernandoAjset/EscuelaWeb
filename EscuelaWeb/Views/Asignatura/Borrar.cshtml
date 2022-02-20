@@ -1,4 +1,4 @@
-﻿@model Alumno;
+﻿@model Asignatura;
 @{
     ViewData["Title"] = "Borrar Alumno";
 }
@@ -11,9 +11,10 @@
         <label asp-for"Id"></label>
         Id curso: @Model.Id<br />
     </div>
-    <div class="alert alert-danger">
+    <br />
+    <div class="alert alert-warning">
         <span>@ViewBag.MensajeBorrado</span>
     </div>
-    <a class="btn btn-info btn-primary-custom" asp-action="MultiAlumno">Cancelar</a>
+    <a class="btn btn-info btn-primary-custom" asp-action="MultiAlumno">Volver</a>
     <button type="submit" class="btn btn-danger btn-primary-custom" asp-action="Borrar">Borrar</button>
 </form>

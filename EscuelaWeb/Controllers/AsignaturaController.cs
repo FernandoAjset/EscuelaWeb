@@ -54,5 +54,10 @@ namespace EscuelaWeb.Controllers
             ViewBag.Fecha = DateTime.Now.ToString();
             return View(modelo);
         }
+        public IActionResult Create()
+        {
+            ViewBag.Fecha= DateTime.Now.ToString();
+            return View();
+        }
     }
 }

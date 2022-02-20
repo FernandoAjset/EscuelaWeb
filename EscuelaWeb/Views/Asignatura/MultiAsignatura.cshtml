@@ -5,4 +5,7 @@
 <h2>@ViewData["Title"]</h2>
 <strong>Listado de todas las asignaturas</strong>
 <p><i>@ViewBag.Fecha</i></p>
+<form method="POST">
+    <input class="btn btn-success btn-primary-custom" type="submit" asp-action="Create" value="Crear nueva asignatura" />
+</form>
 <partial name="_ListaAsignaturas" model="@Model" />

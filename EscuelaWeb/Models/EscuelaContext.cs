@@ -10,10 +10,22 @@ namespace EscuelaWeb.Models
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Evaluacion> Evalucaiones { get; set; }
         public DbSet<Alumno> Alumnos { get; set; }
-        public EscuelaContext(DbContextOptions<EscuelaContext> options) : base(options)
+        private string connectionString;
+        public IConfiguration Configuration { get; }
+        public EscuelaContext(IConfiguration configuration)
         {
-
+            Configuration = configuration;
+            connectionString = Configuration.GetConnectionString("DefaultConnection");
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                .UseSqlServer(
+                    connectionString,
+                    providerOptions => { providerOptions.EnableRetryOnFailure(); });
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -127,6 +139,5 @@ namespace EscuelaWeb.Models
             }
             return listaAlumnos;
         }
-
     }
 }

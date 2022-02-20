@@ -71,15 +71,6 @@ namespace EscuelaWeb.Controllers
             {
                 return View(alumno);
             }
-            var existe = from al in context.Alumnos
-                         where al.Nombre.ToLower() == alumno.Nombre.ToLower()
-                         select al;
-            if (existe.Any())
-            {
-                ModelState.AddModelError(nameof(alumno.Nombre), $"El alumno con nombre" +
-                    $" {alumno.Nombre} ya existe");
-                return View(alumno);
-            }
             context.Alumnos.Add(alumno);
             context.SaveChanges();
             ViewBag.MensajeExito = "Alumno creado";
@@ -151,7 +142,7 @@ namespace EscuelaWeb.Controllers
             return View("Index", alumnoEliminado);
         }
         [HttpGet]
-        public IActionResult NombreAlumnoValida(string nombre)
+        public IActionResult NombreValidoOExiste(string nombre)
         {
             if (string.IsNullOrEmpty(nombre))
                 return View();
@@ -164,6 +155,14 @@ namespace EscuelaWeb.Controllers
                     $"2.El Nombre y apellido deben empezar con Mayuscula, \n" +
                     $"3.No tener espacios despues del apellido, \n" +
                     $"4.No puede incluir números ni simbolos");
+
+            var existe = from al in context.Alumnos
+                         where al.Nombre.ToLower() == nombre.ToLower()
+                         select al;
+            if (existe.Any())
+            {
+                return Json($"El alumno con nombre {nombre} ya existe");
+            }
             return Json("true");
         }
     }

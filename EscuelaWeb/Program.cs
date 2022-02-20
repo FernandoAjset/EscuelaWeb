@@ -1,14 +1,12 @@
 using EscuelaWeb.Models;
+using EscuelaWeb.Servicios;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<EscuelaContext>(options => options.UseInMemoryDatabase("testDB"));
-
+builder.Services.AddTransient<EscuelaContext>();
 var app = builder.Build();
-
 
 using (var scope = app.Services.CreateScope())
 {
@@ -20,11 +18,12 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
+        Console.WriteLine("ERROR AL CREAR BD");
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "Ocurrio un error");
     }
-
 }
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

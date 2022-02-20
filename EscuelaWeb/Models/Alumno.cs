@@ -8,7 +8,7 @@ namespace EscuelaWeb.Models
     public class Alumno: ObjetoEscuelaBase
     {
         [Required(ErrorMessage = "El campo {0} es requerido")]
-        [Remote(action: "NombreAlumnoValida",controller:"Alumno")]
+        [Remote(action: "NombreValidoOExiste", controller:"Alumno")]
         public override string Nombre { get; set; }
         public string CursoId { get; set; }
         public Curso Curso { get; set; }

@@ -10,6 +10,7 @@ namespace EscuelaWeb.Models
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Evaluacion> Evalucaiones { get; set; }
         public DbSet<Alumno> Alumnos { get; set; }
+
         private string connectionString;
         public IConfiguration Configuration { get; }
         public EscuelaContext(IConfiguration configuration)

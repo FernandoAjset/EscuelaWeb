@@ -68,7 +68,7 @@ namespace EscuelaWeb.Controllers
                 return View(nuevoCurso);
             }
             var existe = from curso in context.Cursos
-                         where curso.Nombre == nuevoCurso.Nombre
+                         where curso.Nombre == nuevoCurso.Nombre + "/" + nuevoCurso.Jornada.ToString()
                          && curso.Jornada == nuevoCurso.Jornada
                          select curso;
 
@@ -81,6 +81,7 @@ namespace EscuelaWeb.Controllers
             }
             var escuela = context.Escuelas.FirstOrDefault();
             nuevoCurso.EscuelaId = escuela.Id;
+            nuevoCurso.Nombre = nuevoCurso.Nombre + "/" + nuevoCurso.Jornada.ToString();
             context.Cursos.Add(nuevoCurso);
             context.SaveChanges();
             ViewBag.MensajeExito = "Curso creado";
@@ -95,7 +96,13 @@ namespace EscuelaWeb.Controllers
                          select curso;
             var cursoSelec = cursos.SingleOrDefault();
             if (cursoSelec != null)
-                return View(cursos.SingleOrDefault());
+            {
+                List<string> list = new List<string>();
+                list = cursoSelec.Nombre.Split('/').ToList();
+                cursoSelec.Nombre = list.FirstOrDefault();
+
+                return View(cursoSelec);
+            }
             else
                 return View("NoEncontrado");
         }
@@ -107,7 +114,7 @@ namespace EscuelaWeb.Controllers
                 return View(cursoEdit);
             }
             var existe = from curso in context.Cursos
-                         where curso.Nombre == cursoEdit.Nombre
+                         where curso.Nombre == cursoEdit.Nombre + "/" + cursoEdit.Jornada.ToString()
                          && curso.Jornada == cursoEdit.Jornada
                          select curso;
 
@@ -123,6 +130,7 @@ namespace EscuelaWeb.Controllers
 
             var escuela = context.Escuelas.FirstOrDefault();
             cursoEdit.EscuelaId = escuela.Id;
+            cursoEdit.Nombre +="/" + cursoEdit.Jornada.ToString();
             context.Cursos.Update(cursoEdit);
             context.SaveChanges();
             ViewBag.MensajeExito = "Curso actualizado";

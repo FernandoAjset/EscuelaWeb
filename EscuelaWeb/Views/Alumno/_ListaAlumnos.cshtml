@@ -5,7 +5,8 @@
     <thead class="thead-dark">
         <tr>
             <th scoope="col">Nombre del curso</th>
-            <th scoope="col">Id del curso</th>
+            <th scoope="col">ID del alumno</th>
+            <th scoope="col">Curso</th>
             <th scoope="col">Acciones</th>
         </tr>
     </thead>
@@ -15,6 +16,14 @@
             <tr>
                 <td>@obj.Nombre</td>
                 <td>@obj.Id</td>
+                @if (obj.Curso!=null)
+                {
+                    <td>@obj.Curso.Nombre</td>
+                }
+                else
+                {
+                    <td></td>
+                }
                 <td>
                     <input type="hidden" value="@obj.Id" class="ids" />
                     <a class="btn btn-primary" asp-action="Editar" asp-route-id="@obj.Id">Editar<i class="bi bi-pencil-square"></i></a>

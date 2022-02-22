@@ -2,6 +2,7 @@
 using EscuelaWeb.Servicios;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 
 namespace EscuelaWeb.Controllers
@@ -36,6 +37,7 @@ namespace EscuelaWeb.Controllers
         {
             var cantidadRegistrosPorPagina = 10;
             var listaAlumnos = context.Alumnos
+                .Include(a=>a.Curso)
                 //make sure to order items before paging
                 .OrderBy(x => x.Nombre)
 
@@ -47,6 +49,8 @@ namespace EscuelaWeb.Controllers
 
                 //call ToList() at the end to execute the query and return the result set
                 .ToList();
+
+            //var escuelaContext = context.Asignaturas.Include(a => a.Curso).OrderBy(a=>a.CursoNombre);
             var totalDeRegistros = context.Alumnos.Count();
             var modelo = new ListaViewModel();
             modelo.listado = listaAlumnos;

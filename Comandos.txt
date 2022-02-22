@@ -1,0 +1,1 @@
+dotnet aspnet-codegenerator controller -name EvaluacionController -m Evaluacion -dc EscuelaContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries -f

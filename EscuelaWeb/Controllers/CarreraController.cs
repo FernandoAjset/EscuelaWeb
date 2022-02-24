@@ -75,7 +75,7 @@ namespace EscuelaWeb.Controllers
             if (existe.Any())
             {
                 ModelState.AddModelError(nameof(nuevoCarrera.Nombre),
-                    $"Ya existe un Carrera con nombre {nuevoCarrera.Nombre}" +
+                    $"Ya existe una carrera con nombre {nuevoCarrera.Nombre}" +
                     $" y jornada {nuevoCarrera.Jornada}");
                 return View(nuevoCarrera);
             }
@@ -84,7 +84,7 @@ namespace EscuelaWeb.Controllers
             nuevoCarrera.Nombre = nuevoCarrera.Nombre + "/" + nuevoCarrera.Jornada.ToString();
             context.Carreras.Add(nuevoCarrera);
             context.SaveChanges();
-            ViewBag.MensajeExito = "Carrera creado";
+            ViewBag.MensajeExito = "Carrera creada";
             return View("Index", nuevoCarrera);
         }
         [HttpGet]
@@ -121,7 +121,7 @@ namespace EscuelaWeb.Controllers
             if (existe.Any())
             {
                 ModelState.AddModelError(nameof(CarreraEdit.Nombre),
-                    $"Ya existe un Carrera con nombre {CarreraEdit.Nombre}" +
+                    $"Ya existe una carrera con nombre {CarreraEdit.Nombre}" +
                     $" y jornada {CarreraEdit.Jornada}");
                 return View(CarreraEdit);
             }
@@ -133,7 +133,7 @@ namespace EscuelaWeb.Controllers
             CarreraEdit.Nombre +="/" + CarreraEdit.Jornada.ToString();
             context.Carreras.Update(CarreraEdit);
             context.SaveChanges();
-            ViewBag.MensajeExito = "Carrera actualizado";
+            ViewBag.MensajeExito = "Carrera actualizada";
             return View("Index", CarreraEdit);
         }
         [HttpGet]
@@ -152,10 +152,10 @@ namespace EscuelaWeb.Controllers
             int numeroAlumnos = alumnos.Count();
             if (numeroAlumnos > 0)
             {
-                ViewBag.MensajeBorradoPersonalizado = $"No se puede borrar el Carrera porque tiene {numeroAlumnos} alumnos asignados";
+                ViewBag.MensajeBorradoPersonalizado = $"No se puede borrar la carrera porque tiene {numeroAlumnos} alumnos asignados";
                 return View("Borrar", Carrera.FirstOrDefault());
             }
-            ViewBag.MensajeBorrado = "¿Está seguro que desea eliminar este Carrera?";
+            ViewBag.MensajeBorrado = "¿Está seguro que desea eliminar esta carrera?";
             return View("Borrar", Carrera.FirstOrDefault());
         }
         [HttpPost]
@@ -173,7 +173,7 @@ namespace EscuelaWeb.Controllers
             CarreraEliminado.Jornada = Carrera.FirstOrDefault().Jornada;
             try
             {
-                ViewBag.MensajeExito = "Se eliminó el Carrera";
+                ViewBag.MensajeExito = "Se eliminó la carrera";
                 context.Carreras.Remove(Carrera.FirstOrDefault());
                 context.SaveChanges();
                 return View("Index", CarreraEliminado);

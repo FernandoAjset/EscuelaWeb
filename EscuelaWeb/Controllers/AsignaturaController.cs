@@ -31,9 +31,9 @@ namespace EscuelaWeb.Controllers
                                      CarreraNombre = cur.Nombre,
                                      CarreraId = cur.Id,
                                      Nombre = asig.Nombre,
-                                     Id=asig.Id
+                                     Id = asig.Id
                                  };
-            return View(await escuelaContext.OrderBy(a=>a.CarreraNombre).ToListAsync());
+            return View(await escuelaContext.OrderBy(a => a.CarreraNombre).ToListAsync());
         }
 
         // GET: Asignatura/Details/5
@@ -71,11 +71,22 @@ namespace EscuelaWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                asignatura.Id=Guid.NewGuid().ToString();
+                asignatura.Id = Guid.NewGuid().ToString();
                 var Carrera = from cur in _context.Carreras
-                            where cur.Id == asignatura.CarreraId
-                            select cur;
+                              where cur.Id == asignatura.CarreraId
+                              select cur;
                 asignatura.CarreraNombre = Carrera.FirstOrDefault().Nombre;
+                var existe = from asig in _context.Asignaturas
+                             where asig.Nombre == asignatura.Nombre
+                             && asig.CarreraId == asignatura.CarreraId
+                             select asig;
+                if (existe.Any())
+                {
+                    ViewData["CarreraId"] = new SelectList(_context.Carreras, "Id", "Nombre", asignatura.CarreraId);
+                    ModelState.AddModelError(nameof(asignatura.Nombre),
+                            $"Ya existe una asignatura con nombre {asignatura.Nombre} para la carrera {asignatura.CarreraNombre}");
+                    return View(asignatura);
+                }
                 _context.Add(asignatura);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -97,7 +108,7 @@ namespace EscuelaWeb.Controllers
             {
                 return NotFound();
             }
-            ViewData["CarreraId"] = new SelectList(_context.Carreras.OrderBy(c=>c.Nombre), "Id", "Nombre", asignatura.CarreraId);
+            ViewData["CarreraId"] = new SelectList(_context.Carreras.OrderBy(c => c.Nombre), "Id", "Nombre", asignatura.CarreraId);
             return View(asignatura);
         }
 
@@ -115,6 +126,21 @@ namespace EscuelaWeb.Controllers
 
             if (ModelState.IsValid)
             {
+                var Carrera = from cur in _context.Carreras
+                              where cur.Id == asignatura.CarreraId
+                              select cur;
+                asignatura.CarreraNombre = Carrera.FirstOrDefault().Nombre;
+                var existe = from asig in _context.Asignaturas
+                             where asig.Nombre == asignatura.Nombre
+                             && asig.CarreraId == asignatura.CarreraId
+                             select asig;
+                if (existe.Any())
+                {
+                    ViewData["CarreraId"] = new SelectList(_context.Carreras, "Id", "Nombre", asignatura.CarreraId);
+                    ModelState.AddModelError(nameof(asignatura.Nombre),
+                            $"Ya existe una asignatura con nombre {asignatura.Nombre} para la carrera {asignatura.CarreraNombre}");
+                    return View(asignatura);
+                }
                 try
                 {
                     _context.Update(asignatura);

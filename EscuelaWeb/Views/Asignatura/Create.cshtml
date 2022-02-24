@@ -13,35 +13,26 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CarreraId" class="control-label"></label>
-                <select asp-for="CarreraId" class ="form-control" asp-items="ViewBag.CarreraId"></select>
+                <label asp-for="CarreraId" class="control-label">Carrera</label>
+                <select asp-for="CarreraId" class="form-control" asp-items="ViewBag.CarreraId" id="Carreras" onChange="cambioCarrera();"></select>
+                <input type="hidden" asp-for="CarreraId" id="IdCarrera" />
             </div>
-@*            <div class="form-group">
-                <label asp-for="CarreraNombre" class="control-label"></label>
-                <input asp-for="CarreraNombre" class="form-control" />
-                <span asp-validation-for="CarreraNombre" class="text-danger"></span>
-            </div>*@
-@*            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
+                <label asp-for="Nombre" class="control-label">Nombre de la asignatura</label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <br />
+                <button type="submit" class="btn btn-primary">Enviar</button>
+                <a class="btn btn-info btn-primary-custom" asp-action="Index">Volver</a>
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+<script src="~/js/site.js"></script>
 }

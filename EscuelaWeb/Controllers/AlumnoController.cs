@@ -2,6 +2,7 @@
 using EscuelaWeb.Servicios;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 
@@ -37,7 +38,7 @@ namespace EscuelaWeb.Controllers
         {
             var cantidadRegistrosPorPagina = 10;
             var listaAlumnos = context.Alumnos
-                .Include(a=>a.Carrera)
+                .Include(a => a.Carrera)
                 //make sure to order items before paging
                 .OrderBy(x => x.Nombre)
 
@@ -87,8 +88,10 @@ namespace EscuelaWeb.Controllers
             var existe = from alumno in context.Alumnos
                          where alumno.Id == id
                          select alumno;
+
             if (existe.Any())
             {
+                ViewData["CarreraId"] = new SelectList(context.Carreras.OrderBy(c => c.Nombre), "Id", "Nombre", existe.FirstOrDefault().CarreraId);
                 return View("Editar", existe.FirstOrDefault());
             }
             return View("NoEncontrado");
@@ -100,11 +103,15 @@ namespace EscuelaWeb.Controllers
                 return View(alumnoEdit);
             var existe = from alumno in context.Alumnos
                          where alumno.Nombre.ToLower() == alumnoEdit.Nombre.ToLower()
+                         && alumno.CarreraId==alumnoEdit.CarreraId
                          select alumno;
+
+            var carrera = context.Carreras.Where(c => c.Id == alumnoEdit.CarreraId).FirstOrDefault();
             if (existe.Any())
             {
+                ViewData["CarreraId"] = new SelectList(context.Carreras.OrderBy(c => c.Nombre), "Id", "Nombre", existe.FirstOrDefault().CarreraId);
                 ModelState.AddModelError(nameof(alumnoEdit.Nombre),
-                    $"Ya existe un alumno con nombre {alumnoEdit.Nombre}");
+                    $"Ya existe un alumno con nombre {alumnoEdit.Nombre} y carrera {carrera.Nombre}");
                 return View(alumnoEdit);
             }
             if (existe is null)
@@ -146,7 +153,7 @@ namespace EscuelaWeb.Controllers
             return View("Index", alumnoEliminado);
         }
         [HttpGet]
-        public IActionResult NombreValidoOExiste(string nombre)
+        public IActionResult NombreValidoOExiste(string nombre, string CarreraId)
         {
             if (string.IsNullOrEmpty(nombre))
                 return View();
@@ -162,10 +169,12 @@ namespace EscuelaWeb.Controllers
 
             var existe = from al in context.Alumnos
                          where al.Nombre.ToLower() == nombre.ToLower()
+                         && al.CarreraId== CarreraId
+                         || al.Nombre.ToLower() == nombre.ToLower()
                          select al;
             if (existe.Any())
             {
-                return Json($"El alumno con nombre {nombre} ya existe");
+                return Json($"Ya existe el alumno con nombre {nombre}");
             }
             return Json("true");
         }

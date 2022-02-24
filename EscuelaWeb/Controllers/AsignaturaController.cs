@@ -21,18 +21,19 @@ namespace EscuelaWeb.Controllers
         // GET: Asignatura
         public async Task<IActionResult> Index()
         {
-            //var escuelaContext = _context.Asignaturas.Include(a => a.Curso).OrderBy(a=>a.CursoNombre);
+            //var escuelaContext = _context.Asignaturas.Include(a => a.Carrera).OrderBy(a=>a.CarreraNombre);
+            ViewBag.Fecha = DateTime.Now.ToString();
             var escuelaContext = from asig in _context.Asignaturas
-                                 join cur in _context.Cursos
-                                 on asig.CursoId equals cur.Id
+                                 join cur in _context.Carreras
+                                 on asig.CarreraId equals cur.Id
                                  select new Asignatura
                                  {
-                                     CursoNombre = cur.Nombre,
-                                     CursoId = cur.Id,
+                                     CarreraNombre = cur.Nombre,
+                                     CarreraId = cur.Id,
                                      Nombre = asig.Nombre,
                                      Id=asig.Id
                                  };
-            return View(await escuelaContext.OrderBy(a=>a.CursoNombre).ToListAsync());
+            return View(await escuelaContext.OrderBy(a=>a.CarreraNombre).ToListAsync());
         }
 
         // GET: Asignatura/Details/5
@@ -44,7 +45,7 @@ namespace EscuelaWeb.Controllers
             }
 
             var asignatura = await _context.Asignaturas
-                .Include(a => a.Curso)
+                .Include(a => a.Carrera)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (asignatura == null)
             {
@@ -57,7 +58,7 @@ namespace EscuelaWeb.Controllers
         // GET: Asignatura/Create
         public IActionResult Create()
         {
-            ViewData["CursoId"] = new SelectList(_context.Cursos.OrderBy(c => c.Nombre), "Id", "Nombre");
+            ViewData["CarreraId"] = new SelectList(_context.Carreras.OrderBy(c => c.Nombre), "Id", "Nombre");
             return View();
         }
 
@@ -66,19 +67,20 @@ namespace EscuelaWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CursoId,Id,Nombre")] Asignatura asignatura)
+        public async Task<IActionResult> Create([Bind("CarreraId,Id,Nombre")] Asignatura asignatura)
         {
             if (ModelState.IsValid)
             {
-                var curso = from cur in _context.Cursos
-                            where cur.Id == asignatura.CursoId
+                asignatura.Id=Guid.NewGuid().ToString();
+                var Carrera = from cur in _context.Carreras
+                            where cur.Id == asignatura.CarreraId
                             select cur;
-                asignatura.CursoNombre = curso.FirstOrDefault().Nombre;
+                asignatura.CarreraNombre = Carrera.FirstOrDefault().Nombre;
                 _context.Add(asignatura);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CursoId"] = new SelectList(_context.Cursos, "Id", "Id", asignatura.CursoId);
+            ViewData["CarreraId"] = new SelectList(_context.Carreras, "Id", "Nombre", asignatura.CarreraId);
             return View(asignatura);
         }
 
@@ -95,7 +97,7 @@ namespace EscuelaWeb.Controllers
             {
                 return NotFound();
             }
-            ViewData["CursoId"] = new SelectList(_context.Cursos.OrderBy(c=>c.Nombre), "Id", "Nombre", asignatura.CursoId);
+            ViewData["CarreraId"] = new SelectList(_context.Carreras.OrderBy(c=>c.Nombre), "Id", "Nombre", asignatura.CarreraId);
             return View(asignatura);
         }
 
@@ -104,7 +106,7 @@ namespace EscuelaWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("CursoId,CursoNombre,Id,Nombre")] Asignatura asignatura)
+        public async Task<IActionResult> Edit(string id, [Bind("CarreraId,CarreraNombre,Id,Nombre")] Asignatura asignatura)
         {
             if (id != asignatura.Id)
             {
@@ -131,7 +133,7 @@ namespace EscuelaWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CursoId"] = new SelectList(_context.Cursos, "Id", "Id", asignatura.CursoId);
+            ViewData["CarreraId"] = new SelectList(_context.Carreras, "Id", "Id", asignatura.CarreraId);
             return View(asignatura);
         }
 
@@ -144,7 +146,7 @@ namespace EscuelaWeb.Controllers
             }
 
             var asignatura = await _context.Asignaturas
-                .Include(a => a.Curso)
+                .Include(a => a.Carrera)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (asignatura == null)
             {

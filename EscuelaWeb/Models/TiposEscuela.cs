@@ -4,6 +4,6 @@ namespace EscuelaWeb.Models
     {
         Primaria, 
         Secundaria, 
-        PreEscolar
+        Universidad
     }
 }

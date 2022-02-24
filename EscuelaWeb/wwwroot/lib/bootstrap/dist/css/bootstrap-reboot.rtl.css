@@ -102,7 +102,7 @@ abbr[title],
 abbr[data-bs-original-title] {
   -webkit-text-decoration: underline dotted;
   text-decoration: underline dotted;
-  cursor: help;
+  Carrerar: help;
   -webkit-text-decoration-skip-ink: none;
   text-decoration-skip-ink: none;
 }
@@ -299,7 +299,7 @@ select {
 }
 
 [role=button] {
-  cursor: pointer;
+  Carrerar: pointer;
 }
 
 select {
@@ -323,7 +323,7 @@ button:not(:disabled),
 [type=button]:not(:disabled),
 [type=reset]:not(:disabled),
 [type=submit]:not(:disabled) {
-  cursor: pointer;
+  Carrerar: pointer;
 }
 
 ::-moz-focus-inner {
@@ -411,7 +411,7 @@ iframe {
 
 summary {
   display: list-item;
-  cursor: pointer;
+  Carrerar: pointer;
 }
 
 progress {

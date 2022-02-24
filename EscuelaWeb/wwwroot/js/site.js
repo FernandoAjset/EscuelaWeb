@@ -1,4 +1,9 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿var saludo = "hola mundo";
 
-// Write your JavaScript code.
+function cambio() {
+    const selecAlumno = document.getElementById("alumnos");
+    const alumnoValue = selecAlumno.value;
+
+    const r = document.getElementById("resultado");
+    r.innerText = alumnoValue;
+}

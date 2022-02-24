@@ -4,9 +4,9 @@
 <table class="table table-sm table-hover">
     <thead class="thead-dark">
         <tr>
-            <th scoope="col">Nombre del curso</th>
+            <th scoope="col">Nombre del alumno</th>
             <th scoope="col">ID del alumno</th>
-            <th scoope="col">Curso</th>
+            <th scoope="col">Carrera</th>
             <th scoope="col">Acciones</th>
         </tr>
     </thead>
@@ -16,9 +16,9 @@
             <tr>
                 <td>@obj.Nombre</td>
                 <td>@obj.Id</td>
-                @if (obj.Curso!=null)
+                @if (obj.Carrera!=null)
                 {
-                    <td>@obj.Curso.Nombre</td>
+                    <td>@obj.Carrera.Nombre</td>
                 }
                 else
                 {

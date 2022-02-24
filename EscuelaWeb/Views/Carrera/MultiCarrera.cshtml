@@ -1,0 +1,11 @@
+﻿@model ListaViewModel
+@{
+    ViewData["Title"] = "Información de los Carreras";
+}
+<h2>@ViewData["Title"]</h2>
+<strong>Listado de todos los Carreras</strong>
+<p><i>@ViewBag.Fecha</i></p>
+<form method="POST">
+<input class="btn btn-success btn-primary-custom" type="submit" asp-action="Create" value="Crear nueva carrera"/>
+</form>
+<partial name="_ListaCarreras" model="@Model" />

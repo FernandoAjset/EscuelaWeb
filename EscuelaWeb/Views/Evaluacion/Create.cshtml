@@ -9,17 +9,12 @@
 <h4>Evaluacion</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <input type="hidden" asp-for="AlumnoId" />
+    <form class="col-md-4">
+        <form asp-action="Create" method="POST">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="AlumnoId" class="control-label"></label>
-                <select asp-for="AlumnoId" required class ="form-control" asp-items="ViewBag.AlumnoId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="AsignaturaId" class="control-label"></label>
-                <select asp-for="AsignaturaId" class ="form-control" asp-items="ViewBag.AsignaturaId"></select>
+                <label asp-for="AlumnoId" class="control-label">Alumno</label>
+                <select asp-for="AlumnoId" class="form-control" asp-items="ViewBag.AlumnoId" id="alumnos" onChange="cambio();"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Nota" class="control-label"></label>
@@ -27,26 +22,31 @@
                 <span asp-validation-for="Nota" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <input type="hidden" class="form-control" id="resultado" />
+                <button asp-controller="Evaluacion" asp-action="Create" class="btn btn-primary" formmethod="get">Click Me</button>
+            <div class="form-group">
+                <label asp-for="AsignaturaId" class="control-label">Asignatura</label>
+                <select asp-for="AsignaturaId" class="form-control" asp-items="ViewBag.AsignaturaId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
-    </div>
+    </form>
 </div>
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+<sript src="~/js/site.js"></sript>
+    }
 }

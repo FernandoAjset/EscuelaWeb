@@ -1,6 +1,6 @@
-﻿@model Curso;
+﻿@model Carrera;
 @{
-    ViewData["Title"] = "Creación de Curso";
+    ViewData["Title"] = "Creación de Carrera";
 }
 <h2>@ViewData["Title"]</h2>
 <p><i>@ViewBag.Fecha</i></p>
@@ -21,7 +21,7 @@
         <span asp-validation-for="Jornada" class="text-danger"></span>
         <br />
         <button type="submit" class="btn btn-primary">Enviar</button>
-        <a class="btn btn-info btn-primary-custom" asp-action="MultiCurso">Volver</a>
+        <a class="btn btn-info btn-primary-custom" asp-action="MultiCarrera">Volver</a>
     </div>
 </form>
 @section Scripts{

@@ -24,7 +24,6 @@ namespace EscuelaWeb.Controllers
             var escuelaContext = _context.Evalucaiones.Include(e => e.Alumno).Include(e => e.Asignatura);
             return View(await escuelaContext.ToListAsync());
         }
-
         // GET: Evaluacion/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -46,20 +45,15 @@ namespace EscuelaWeb.Controllers
         }
 
         // GET: Evaluacion/Create
-        public IActionResult Create(string AlumnoId)
+        public IActionResult Create(string resultado, Evaluacion evaluacion)
         {
-            ViewData["AlumnoId"] = new SelectList(_context.Alumnos.OrderBy(a=>a.Nombre), "Id", "Nombre");
-            var alumno=from al in _context.Alumnos
-                       where al.Id == AlumnoId
-                       select al;
-
-            //var asignaturas=from asig in _context.Asignaturas
-            //                where asig.CursoId == alumno.FirstOrDefault().CursoId
-            //                select asig;
-            //ViewData["AsignaturaId"] = new SelectList(asignaturas.ToList(), "Id", "Nombre");
-            ViewData["AsignaturaId"] = new SelectList(_context.Asignaturas, "Id", "Nombre");
-
-            return View();
+            ViewData["AlumnoId"] = new SelectList(_context.Alumnos.Include(e => e.Carrera).OrderBy(a => a.Nombre), "Id", "Nombre");
+            if (evaluacion.AlumnoId is not null)
+            {
+                var alumno = _context.Alumnos.Include(a => a.Carrera).Where(a => a.Id == evaluacion.AlumnoId).FirstOrDefault();
+                ViewData["AsignaturaId"] = new SelectList(_context.Asignaturas.Where(e => e.CarreraId == alumno.CarreraId).OrderBy(e=>e.Nombre), "Id", "Nombre");
+            }
+            return View(evaluacion);
         }
 
         // POST: Evaluacion/Create
@@ -67,16 +61,17 @@ namespace EscuelaWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AlumnoId,AsignaturaId,Nota,Id,Nombre")] Evaluacion evaluacion)
+        public async Task<IActionResult> Create([Bind("AlumnoId,AsignaturaId,Nota,Nombre")] Evaluacion evaluacion)
         {
             if (ModelState.IsValid)
             {
+                evaluacion.Id = Guid.NewGuid().ToString();
                 _context.Add(evaluacion);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AlumnoId"] = new SelectList(_context.Alumnos, "Id", "Id", evaluacion.AlumnoId);
-            ViewData["AsignaturaId"] = new SelectList(_context.Asignaturas, "Id", "Id", evaluacion.AsignaturaId);
+            ViewData["AlumnoId"] = new SelectList(_context.Alumnos, "Id", "Nombre", evaluacion.AlumnoId);
+            ViewData["AsignaturaId"] = new SelectList(_context.Asignaturas, "Id", "Nombre", evaluacion.AsignaturaId);
             return View(evaluacion);
         }
 

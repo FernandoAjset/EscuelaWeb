@@ -37,7 +37,7 @@ namespace EscuelaWeb.Controllers
         {
             var cantidadRegistrosPorPagina = 10;
             var listaAlumnos = context.Alumnos
-                .Include(a=>a.Curso)
+                .Include(a=>a.Carrera)
                 //make sure to order items before paging
                 .OrderBy(x => x.Nombre)
 
@@ -50,7 +50,7 @@ namespace EscuelaWeb.Controllers
                 //call ToList() at the end to execute the query and return the result set
                 .ToList();
 
-            //var escuelaContext = context.Asignaturas.Include(a => a.Curso).OrderBy(a=>a.CursoNombre);
+            //var escuelaContext = context.Asignaturas.Include(a => a.Carrera).OrderBy(a=>a.CarreraNombre);
             var totalDeRegistros = context.Alumnos.Count();
             var modelo = new ListaViewModel();
             modelo.listado = listaAlumnos;
@@ -129,10 +129,10 @@ namespace EscuelaWeb.Controllers
 
         }
         [HttpPost]
-        public IActionResult Borrar(Curso cursoBorrar)
+        public IActionResult Borrar(Carrera CarreraBorrar)
         {
             var alumno = from alum in context.Alumnos
-                         where cursoBorrar.Id == alum.Id
+                         where CarreraBorrar.Id == alum.Id
                          select alum;
             if (!alumno.Any())
                 return View("NoEncontrado");

@@ -3,7 +3,7 @@
 <table class="table table-sm table-hover">
     <thead class="thead-dark">
         <tr>
-            <th scoope="col">Nombre del curso</th>
+            <th scoope="col">Nombre del Carrera</th>
             <th scoope="col">Nombre de la asignatura</th>
             <th scoope="col">Id de la asignatura</th>
             <th scoope="col">Acciones</th>
@@ -13,7 +13,7 @@
         @foreach (Asignatura obj in Model.listado)
         {
             <tr>
-                <td>@obj.CursoNombre</td>
+                <td>@obj.CarreraNombre</td>
                 <td>@obj.Nombre</td>
                 <td>@obj.Id</td>
                 <td>

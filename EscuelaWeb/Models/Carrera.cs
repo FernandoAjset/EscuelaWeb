@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EscuelaWeb.Models
 {
-    public class Curso : ObjetoEscuelaBase
+    public class Carrera : ObjetoEscuelaBase
     {
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [StringLength(maximumLength: 50, MinimumLength = 3, ErrorMessage = "La longitud del campo " +

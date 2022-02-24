@@ -8,7 +8,7 @@ namespace EscuelaWeb.Models
 {
     public enum LlaveDiccionario
     {
-        Curso,
+        Carrera,
         Alumno,
         Asignatura,
         Escuela,

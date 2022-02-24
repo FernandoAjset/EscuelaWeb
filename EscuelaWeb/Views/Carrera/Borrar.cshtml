@@ -1,6 +1,6 @@
-﻿@model Curso;
+﻿@model Carrera;
 @{
-    ViewData["Title"] = "Borrar Curso";
+    ViewData["Title"] = "Borrar Carrera";
 }
 @{
     string borradoPersonalizado = ViewBag.MensajeBorradoPersonalizado;
@@ -13,7 +13,7 @@
         <label asp-for"Nombre"></label>
         Nombre: @Model.Nombre<br />
         <label asp-for"Id"></label>
-        Id curso: @Model.Id<br />
+        Id Carrera: @Model.Id<br />
         <label asp-for"Jornada"></label>
         Jornada: @Model.Jornada
     </div>
@@ -31,7 +31,7 @@
         </div>
     }
 
-    <a class="btn btn-info btn-primary-custom" asp-action="MultiCurso">Volver</a>
+    <a class="btn btn-info btn-primary-custom" asp-action="MultiCarrera">Volver</a>
     @{
         if (string.IsNullOrEmpty(borradoPersonalizado))
         {

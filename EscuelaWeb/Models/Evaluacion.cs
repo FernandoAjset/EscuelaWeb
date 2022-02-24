@@ -7,12 +7,12 @@ namespace EscuelaWeb.Models
     public class Evaluacion: ObjetoEscuelaBase
     {
         [Required]
-        [Remote(action:"Index",controller:"Evaluacion")]
+        public override string Nombre { get; set; }
         public string AlumnoId { get; set; }
         public Alumno Alumno { get; set; }
-        [Required]
         public string AsignaturaId  { get; set; }
         public Asignatura Asignatura { get; set; }
+        [Required]
         public float Nota { get; set; }
 
         public override string ToString()

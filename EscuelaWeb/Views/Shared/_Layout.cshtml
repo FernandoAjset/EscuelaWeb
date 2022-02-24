@@ -26,7 +26,7 @@
                             <a class="nav-link text-dark" asp-controller="Escuela" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Curso" asp-action="MultiCurso">Cursos</a>
+                            <a class="nav-link text-dark" asp-controller="Carrera" asp-action="MultiCarrera">Carreras</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Asignatura" asp-action="Index">Asignaturas</a>
@@ -34,9 +34,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Alumno" asp-action="MultiAlumno">Alumnos</a>
                         </li>
-                        <li class="nav-item">
+@*                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Evaluacion" asp-action="Index">Evaluaciones</a>
-                        </li>
+                        </li>*@
                     </ul>
                 </div>
             </div>
@@ -50,7 +50,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - EscuelaWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - EscuelaWeb @*- <a asp-area="" asp-controller="Home" asp-action="Privacy"*@>Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

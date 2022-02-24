@@ -4,7 +4,7 @@ namespace EscuelaWeb.Servicios
 {
     public class Alumno_DAO
     {
-        public static List<Alumno> GenerarAlumnosAlAzar(Curso curso,int cantidad)
+        public static List<Alumno> GenerarAlumnosAlAzar(Carrera Carrera,int cantidad)
         {
             string[] nombre1 = { "Alba", "Felipa", "Eusebio", "Farid", "Donald", "Alvaro", "Nicolás" };
             string[] apellido1 = { "Ruiz", "Sarmiento", "Uribe", "Maduro", "Trump", "Toledo", "Herrera" };
@@ -15,7 +15,7 @@ namespace EscuelaWeb.Servicios
                                from a1 in apellido1
                                select new Alumno
                                {
-                               CursoId=curso.Id,
+                               CarreraId=Carrera.Id,
                                Nombre = $"{n1} {n2} {a1}", 
                                Id=Guid.NewGuid().ToString() 
                                };

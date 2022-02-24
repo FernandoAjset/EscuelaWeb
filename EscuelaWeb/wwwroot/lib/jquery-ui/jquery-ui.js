@@ -6247,7 +6247,7 @@ $.widget( "ui.autocomplete", {
 		if ( !this.isMultiLine || this.menu.element.is( ":visible" ) ) {
 			this._move( keyEvent, event );
 
-			// Prevents moving cursor to beginning/end of the text field in some browsers
+			// Prevents moving Carrerar to beginning/end of the text field in some browsers
 			event.preventDefault();
 		}
 	},
@@ -7738,7 +7738,7 @@ $.extend( Datepicker.prototype, {
 				each( function() {
 					this.disabled = false;
 				} ).end().
-				filter( "img" ).css( { opacity: "1.0", cursor: "" } );
+				filter( "img" ).css( { opacity: "1.0", Carrerar: "" } );
 		} else if ( nodeName === "div" || nodeName === "span" ) {
 			inline = $target.children( "." + this._inlineClass );
 			inline.children().removeClass( "ui-state-disabled" );
@@ -7772,7 +7772,7 @@ $.extend( Datepicker.prototype, {
 				each( function() {
 					this.disabled = true;
 				} ).end().
-				filter( "img" ).css( { opacity: "0.5", cursor: "default" } );
+				filter( "img" ).css( { opacity: "0.5", Carrerar: "default" } );
 		} else if ( nodeName === "div" || nodeName === "span" ) {
 			inline = $target.children( "." + this._inlineClass );
 			inline.children().addClass( "ui-state-disabled" );
@@ -8088,7 +8088,7 @@ $.extend( Datepicker.prototype, {
 		$.datepicker._lastInput = input;
 		$.datepicker._setDateFromField( inst );
 
-		if ( $.datepicker._inDialog ) { // hide cursor
+		if ( $.datepicker._inDialog ) { // hide Carrerar
 			input.value = "";
 		}
 		if ( !$.datepicker._pos ) { // position below input
@@ -9645,7 +9645,7 @@ var widgetsMouse = $.widget( "ui.mouse", {
 
 		// Only check for mouseups outside the document if you've moved inside the document
 		// at least once. This prevents the firing of mouseup in the case of IE<9, which will
-		// fire a mousemove event if content is placed under the cursor. See #7778
+		// fire a mousemove event if content is placed under the Carrerar. See #7778
 		// Support: IE <9
 		if ( this._mouseMoved ) {
 
@@ -9808,8 +9808,8 @@ $.widget( "ui.draggable", $.ui.mouse, {
 		axis: false,
 		connectToSortable: false,
 		containment: false,
-		cursor: "auto",
-		cursorAt: false,
+		Carrerar: "auto",
+		CarrerarAt: false,
 		grid: false,
 		handle: false,
 		helper: "original",
@@ -9963,9 +9963,9 @@ $.widget( "ui.draggable", $.ui.mouse, {
 		this.originalPageX = event.pageX;
 		this.originalPageY = event.pageY;
 
-		//Adjust the mouse offset relative to the helper if "cursorAt" is supplied
-		if ( o.cursorAt ) {
-			this._adjustOffsetFromHelper( o.cursorAt );
+		//Adjust the mouse offset relative to the helper if "CarrerarAt" is supplied
+		if ( o.CarrerarAt ) {
+			this._adjustOffsetFromHelper( o.CarrerarAt );
 		}
 
 		//Set a containment if given in the options
@@ -10736,20 +10736,20 @@ $.ui.plugin.add( "draggable", "connectToSortable", {
 	}
 } );
 
-$.ui.plugin.add( "draggable", "cursor", {
+$.ui.plugin.add( "draggable", "Carrerar", {
 	start: function( event, ui, instance ) {
 		var t = $( "body" ),
 			o = instance.options;
 
-		if ( t.css( "cursor" ) ) {
-			o._cursor = t.css( "cursor" );
+		if ( t.css( "Carrerar" ) ) {
+			o._Carrerar = t.css( "Carrerar" );
 		}
-		t.css( "cursor", o.cursor );
+		t.css( "Carrerar", o.Carrerar );
 	},
 	stop: function( event, ui, instance ) {
 		var o = instance.options;
-		if ( o._cursor ) {
-			$( "body" ).css( "cursor", o._cursor );
+		if ( o._Carrerar ) {
+			$( "body" ).css( "Carrerar", o._Carrerar );
 		}
 	}
 } );
@@ -11365,7 +11365,7 @@ $.widget( "ui.resizable", $.ui.mouse, {
 
 	_mouseStart: function( event ) {
 
-		var curleft, curtop, cursor,
+		var curleft, curtop, Carrerar,
 			o = this.options,
 			el = this.element;
 
@@ -11412,8 +11412,8 @@ $.widget( "ui.resizable", $.ui.mouse, {
 			o.aspectRatio :
 			( ( this.originalSize.width / this.originalSize.height ) || 1 );
 
-		cursor = $( ".ui-resizable-" + this.axis ).css( "cursor" );
-		$( "body" ).css( "cursor", cursor === "auto" ? this.axis + "-resize" : cursor );
+		Carrerar = $( ".ui-resizable-" + this.axis ).css( "Carrerar" );
+		$( "body" ).css( "Carrerar", Carrerar === "auto" ? this.axis + "-resize" : Carrerar );
 
 		this._addClass( "ui-resizable-resizing" );
 		this._propagate( "start", event );
@@ -11497,7 +11497,7 @@ $.widget( "ui.resizable", $.ui.mouse, {
 			}
 		}
 
-		$( "body" ).css( "cursor", "auto" );
+		$( "body" ).css( "Carrerar", "auto" );
 
 		this._removeClass( "ui-resizable-resizing" );
 
@@ -15514,8 +15514,8 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 		axis: false,
 		connectWith: false,
 		containment: false,
-		cursor: "auto",
-		cursorAt: false,
+		Carrerar: "auto",
+		CarrerarAt: false,
 		dropOnEmpty: true,
 		forcePlaceholderSize: false,
 		forceHelperSize: false,
@@ -15709,9 +15709,9 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 		this.helper.css( "position", "absolute" );
 		this.cssPosition = this.helper.css( "position" );
 
-		//Adjust the mouse offset relative to the helper if "cursorAt" is supplied
-		if ( o.cursorAt ) {
-			this._adjustOffsetFromHelper( o.cursorAt );
+		//Adjust the mouse offset relative to the helper if "CarrerarAt" is supplied
+		if ( o.CarrerarAt ) {
+			this._adjustOffsetFromHelper( o.CarrerarAt );
 		}
 
 		//Cache the former DOM position
@@ -15741,15 +15741,15 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 			this._setContainment();
 		}
 
-		if ( o.cursor && o.cursor !== "auto" ) { // cursor option
+		if ( o.Carrerar && o.Carrerar !== "auto" ) { // Carrerar option
 			body = this.document.find( "body" );
 
 			// Support: IE
-			this.storedCursor = body.css( "cursor" );
-			body.css( "cursor", o.cursor );
+			this.storedCarrerar = body.css( "Carrerar" );
+			body.css( "Carrerar", o.Carrerar );
 
 			this.storedStylesheet =
-				$( "<style>*{ cursor: " + o.cursor + " !important; }</style>" ).appendTo( body );
+				$( "<style>*{ Carrerar: " + o.Carrerar + " !important; }</style>" ).appendTo( body );
 		}
 
 		// We need to make sure to grab the zIndex before setting the
@@ -17017,8 +17017,8 @@ var widgetsSortable = $.widget( "ui.sortable", $.ui.mouse, {
 		}
 
 		//Do what was originally in plugins
-		if ( this.storedCursor ) {
-			this.document.find( "body" ).css( "cursor", this.storedCursor );
+		if ( this.storedCarrerar ) {
+			this.document.find( "body" ).css( "Carrerar", this.storedCarrerar );
 			this.storedStylesheet.remove();
 		}
 		if ( this._storedOpacity ) {

@@ -2,14 +2,14 @@
 <table class="table table-sm table-hover">
     <thead class="thead-dark">
         <tr>
-            <th scoope="col">Nombre del curso</th>
-            <th scoope="col">Id del curso</th>
+            <th scoope="col">Nombre de la Carrera</th>
+            <th scoope="col">Id de la Carrera</th>
             <th scope="col">Jornada</th>
             <th scoope="col">Acciones</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (Curso obj in Model.listado)
+        @foreach (Carrera obj in Model.listado)
         {
             <tr>
                 <td>@obj.Nombre</td>

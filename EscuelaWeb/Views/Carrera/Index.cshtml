@@ -1,6 +1,6 @@
-﻿@model Curso;
+﻿@model Carrera;
 @{
-    ViewData["Title"] = "Información Curso";
+    ViewData["Title"] = "Información Carrera";
 }
 <h2>@ViewData["Title"]</h2>
 @{
@@ -22,7 +22,7 @@
 <p><i>@ViewBag.Fecha</i></p>
 <p>
     Nombre: @Model.Nombre<br />
-    Id curso: @Model.Id<br />
+    Id Carrera: @Model.Id<br />
     Jornada: @Model.Jornada
 </p>
-<a class="btn btn-info btn-primary-custom" asp-action="MultiCurso">Ver Cursos</a>
+<a class="btn btn-info btn-primary-custom" asp-action="MultiCarrera">Ver Carreras</a>

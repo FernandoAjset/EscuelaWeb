@@ -5,9 +5,9 @@ namespace EscuelaWeb.Models
 
     public class Asignatura: ObjetoEscuelaBase
     {
-        public string CursoId { get; set; }
-        public string CursoNombre { get; set; }
-        public Curso Curso { get; set; }
+        public string CarreraId { get; set; }
+        public string CarreraNombre { get; set; }
+        public Carrera Carrera { get; set; }
         public List<Evaluacion> Evaluaciones { get; set; }
     }
 }

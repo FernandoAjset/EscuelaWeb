@@ -39,6 +39,7 @@ namespace EscuelaWeb.Controllers
             var listaCarreras = context.Carreras
                 //make sure to order items before paging
                 .OrderBy(x => x.Nombre)
+                .ThenBy(x=>x.Jornada)
                 //skip items before current page
                 .Skip((pagina - 1) * cantidadRegistrosPorPagina)
                 //take only 10 (page size) items

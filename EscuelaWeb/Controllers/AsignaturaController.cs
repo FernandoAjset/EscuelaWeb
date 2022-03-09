@@ -21,19 +21,9 @@ namespace EscuelaWeb.Controllers
         // GET: Asignatura
         public async Task<IActionResult> Index()
         {
-            //var escuelaContext = _context.Asignaturas.Include(a => a.Carrera).OrderBy(a=>a.CarreraNombre);
             ViewBag.Fecha = DateTime.Now.ToString();
-            var escuelaContext = from asig in _context.Asignaturas
-                                 join cur in _context.Carreras
-                                 on asig.CarreraId equals cur.Id
-                                 select new Asignatura
-                                 {
-                                     CarreraNombre = cur.Nombre,
-                                     CarreraId = cur.Id,
-                                     Nombre = asig.Nombre,
-                                     Id = asig.Id
-                                 };
-            return View(await escuelaContext.OrderBy(a => a.CarreraNombre).ToListAsync());
+            var asignaturas = _context.Asignaturas.Include(a => a.Carrera).OrderBy(a => a.Carrera.Nombre).ThenBy(a => a.Nombre);
+            return View(asignaturas);
         }
 
         // GET: Asignatura/Details/5

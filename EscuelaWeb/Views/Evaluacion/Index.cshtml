@@ -1,13 +1,14 @@
 @model IEnumerable<EscuelaWeb.Models.Evaluacion>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Información de las Evaluaciones";
 }
 
-<h1>Index</h1>
-
+<h2>@ViewData["Title"]</h2>
+<strong>Listado de todas las asignaturas</strong>
+<p><i>@ViewBag.Fecha</i></p>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-success btn-primary-custom" type="submit" asp-action="Create">Crear nueva evaluación</a>
 </p>
 <table class="table">
     <thead>
@@ -19,35 +20,38 @@
                 @Html.DisplayNameFor(model => model.Asignatura)
             </th>
             <th>
+                Tipo de evaluación
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Nota)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nombre)
+                Acciones
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Alumno.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Asignatura.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nota)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Alumno.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Asignatura.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoEvaluacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nota)
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Editar<i class="bi bi-pencil-square"></i></a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Borrar<i class="bi bi-trash3-fill"></i></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

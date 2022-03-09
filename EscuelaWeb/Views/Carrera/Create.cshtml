@@ -6,7 +6,7 @@
 <p><i>@ViewBag.Fecha</i></p>
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 <form method="POST">
-    <div class="form-group">
+    <div class="form-group col-md-4">
         <label asp-for="Nombre"></label>
         <input class="form-control" asp-for="Nombre" />
         <span asp-validation-for="Nombre" class="text-danger"></span>

@@ -1,52 +1,56 @@
-@model EscuelaWeb.Models.Evaluacion
+@model EvaluacionCreacionViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear evaluación";
 }
-
-<h1>Create</h1>
-
-<h4>Evaluacion</h4>
+<h2>@ViewData["Title"]</h2>
+<p><i>@ViewBag.Fecha</i></p>
 <hr />
-<div class="row">
-    <form class="col-md-4">
-        <form asp-action="Create" method="POST">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="AlumnoId" class="control-label">Alumno</label>
-                <select asp-for="AlumnoId" class="form-control" asp-items="ViewBag.AlumnoId" id="alumnos" onChange="cambio();"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nota" class="control-label"></label>
-                <input asp-for="Nota" class="form-control" />
-                <span asp-validation-for="Nota" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <input type="hidden" class="form-control" id="resultado" />
-                <button asp-controller="Evaluacion" asp-action="Create" class="btn btn-primary" formmethod="get">Click Me</button>
-            <div class="form-group">
-                <label asp-for="AsignaturaId" class="control-label">Asignatura</label>
-                <select asp-for="AsignaturaId" class="form-control" asp-items="ViewBag.AsignaturaId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </form>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-
+<form asp-action="Create" method="POST" class="col-md-4">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="AlumnoId" class="control-label">Alumno</label>
+        <select asp-for="AlumnoId" asp-items="Model.Alumnos" class="form-select valid"></select>
+        <span asp-validation-for="AlumnoId" class="text-danger  mb-3"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AsignaturaId" class="control-label">Asignatura</label>
+        <select asp-for="AsignaturaId" asp-items="Model.Asignaturas" class="form-select valid"></select>
+        <span asp-validation-for="AsignaturaId" class="text-danger  mb-3"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Nota" class="control-label"></label>
+        <input asp-for="Nota" class="form-control" />
+        <span asp-validation-for="Nota" class="text-danger  mb-3"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TipoEvaluacion" class="control-label">Tipo de evaluación</label>
+        <select asp-for="TipoEvaluacion" asp-items="Html.GetEnumSelectList<TipoEvaluacion>()" class="form-select valid"></select>
+        <span asp-validation-for="TipoEvaluacion" class="text-danger"></span>
+    </div>
+    <button class="btn btn-primary mt-3">Enviar</button>
+    <a class="btn btn-info mt-3" asp-action="Index">Cancelar</a>
+</form>
 @section Scripts {
-    @{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-<sript src="~/js/site.js"></sript>
-    }
+<partial name="_ValidationScriptsPartial" />
+<script>
+        const urlObtenerAsignaturas='@Url.Action("ObtenerAsignaturas")';
+
+    $(function() {
+        $("#AlumnoId").change(async function () {
+            const valorSeleccionado=$(this).val();
+            const respuesta=await fetch(urlObtenerAsignaturas,{
+                method: 'POST',
+                body: JSON.stringify(valorSeleccionado),
+                headers: {
+                    'Content-Type':'application/json'
+                }
+            });
+
+            const json= await respuesta.json();
+            const opciones=json.map(categoria=>`<option value=${categoria.value}>${categoria.text}</option>`);
+            $("#AsignaturaId").html(opciones);
+        })
+    })
+</script>
 }

@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using EscuelaWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EscuelaWeb.Models;
 
 namespace EscuelaWeb.Controllers
 {
@@ -21,7 +17,7 @@ namespace EscuelaWeb.Controllers
         // GET: Asignatura
         public async Task<IActionResult> Index()
         {
-            ViewBag.Fecha = DateTime.Now.ToString();
+
             var asignaturas = _context.Asignaturas.Include(a => a.Carrera).OrderBy(a => a.Carrera.Nombre).ThenBy(a => a.Nombre);
             return View(asignaturas);
         }
@@ -177,10 +173,23 @@ namespace EscuelaWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var asignatura = await _context.Asignaturas.FindAsync(id);
-            _context.Asignaturas.Remove(asignatura);
+            var asignaturaExiste = await _context.Asignaturas.FirstOrDefaultAsync(a => a.Id == id);
+            if (asignaturaExiste is null)
+                return View("NoEncontrado");
+
+            var evaluaciones = await _context.Evalucaiones.Where(a => a.AsignaturaId == id).ToListAsync();
+            _context.Evalucaiones.RemoveRange(evaluaciones);
+            _context.Asignaturas.Remove(asignaturaExiste);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+
+
+
+
+            //var asignatura = await _context.Asignaturas.FindAsync(id);
+            //_context.Asignaturas.Remove(asignatura);
+            //await _context.SaveChangesAsync();
+            //return RedirectToAction(nameof(Index));
         }
 
         private bool AsignaturaExists(string id)

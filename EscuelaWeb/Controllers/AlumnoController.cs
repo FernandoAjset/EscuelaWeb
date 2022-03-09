@@ -17,7 +17,7 @@ namespace EscuelaWeb.Controllers
         }
         public IActionResult Index(string Id)
         {
-            ViewBag.Fecha = DateTime.Now.ToString();
+
             if (!string.IsNullOrEmpty(Id))
             {
                 var alumnos = from alumno in context.Alumnos
@@ -58,20 +58,20 @@ namespace EscuelaWeb.Controllers
             modelo.PaginaActual = pagina;
             modelo.TotalDeRegistros = totalDeRegistros;
             modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
-            ViewBag.Fecha = DateTime.Now.ToString();
+
             return View(modelo);
         }
 
         public IActionResult Crear()
         {
-            ViewBag.Fecha = DateTime.Now.ToString();
+
             return View();
         }
 
         [HttpPost]
         public IActionResult Create(Alumno alumno)
         {
-            ViewBag.Fecha = DateTime.Now.ToString();
+
             if (!ModelState.IsValid)
             {
                 return View(alumno);
@@ -84,7 +84,7 @@ namespace EscuelaWeb.Controllers
         [HttpGet]
         public IActionResult Editar(string id)
         {
-            ViewBag.Fecha = DateTime.Now.ToString();
+
             var existe = from alumno in context.Alumnos
                          where alumno.Id == id
                          select alumno;
@@ -103,7 +103,7 @@ namespace EscuelaWeb.Controllers
                 return View(alumnoEdit);
             var existe = from alumno in context.Alumnos
                          where alumno.Nombre.ToLower() == alumnoEdit.Nombre.ToLower()
-                         && alumno.CarreraId==alumnoEdit.CarreraId
+                         && alumno.CarreraId == alumnoEdit.CarreraId
                          select alumno;
 
             var carrera = context.Carreras.Where(c => c.Id == alumnoEdit.CarreraId).FirstOrDefault();
@@ -131,26 +131,24 @@ namespace EscuelaWeb.Controllers
             {
                 return View("NoEncontrado");
             }
-            ViewBag.MensajeBorrado = "¿Está seguro que desea eliminar este alumno?";
+            ViewBag.MensajeBorrado = "¿Está seguro que desea eliminar este alumno? NOTA: Al eliminar el alumno también se" +
+                " eliminarán sus evaluaciones";
             return View("Borrar", alumno.FirstOrDefault());
 
         }
         [HttpPost]
-        public IActionResult Borrar(Carrera CarreraBorrar)
+        public async Task<IActionResult> BorrarAlumno(string id)
         {
-            var alumno = from alum in context.Alumnos
-                         where CarreraBorrar.Id == alum.Id
-                         select alum;
-            if (!alumno.Any())
+            var alumnoExiste = await context.Alumnos.FirstOrDefaultAsync(a => a.Id == id);
+            if (alumnoExiste is null)
                 return View("NoEncontrado");
 
-            ViewBag.MensajeExito = "Se eliminó el alumno";
-            var alumnoEliminado = new Alumno();
-            alumnoEliminado.Id = alumno.FirstOrDefault().Id;
-            alumnoEliminado.Nombre = alumno.FirstOrDefault().Nombre;
-            context.Alumnos.Remove(alumno.FirstOrDefault());
+            var evaluaciones = await context.Evalucaiones.Where(a => a.AlumnoId == id).ToListAsync();
+            context.Evalucaiones.RemoveRange(evaluaciones);
+            context.Alumnos.Remove(alumnoExiste);
             context.SaveChanges();
-            return View("Index", alumnoEliminado);
+            ViewBag.MensajeExito = "Se eliminó el alumno";
+            return View("Index", alumnoExiste);
         }
         [HttpGet]
         public IActionResult NombreValidoOExiste(string nombre, string CarreraId)
@@ -169,7 +167,7 @@ namespace EscuelaWeb.Controllers
 
             var existe = from al in context.Alumnos
                          where al.Nombre.ToLower() == nombre.ToLower()
-                         && al.CarreraId== CarreraId
+                         && al.CarreraId == CarreraId
                          || al.Nombre.ToLower() == nombre.ToLower()
                          select al;
             if (existe.Any())

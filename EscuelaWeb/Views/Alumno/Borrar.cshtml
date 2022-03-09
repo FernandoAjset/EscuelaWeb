@@ -4,17 +4,19 @@
 }
 <h2>@ViewData["Title"]</h2>
 <p><i>@ViewBag.Fecha</i></p>
-<form method="POST">
-    <div class="form-group">
-        <label asp-for"Nombre"></label>
-        Nombre: @Model.Nombre<br />
-        <label asp-for"Id"></label>
-        Id Carrera: @Model.Id<br />
-    </div>
-    <br />
-    <div class="alert alert-warning">
-        <span>@ViewBag.MensajeBorrado</span>
-    </div>
+
+<div class="form-group">
+    <label asp-for="Nombre"></label>
+    : @Model.Nombre<br />
+    <label asp-for="Id"></label>
+    : @Model.Id<br />
+</div>
+<br />
+<div class="alert alert-warning">
+    <span>@ViewBag.MensajeBorrado</span>
+</div>
+<form asp-action="BorrarAlumno">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger btn-primary-custom" asp-action="BorrarAlumno">Borrar</button>
     <a class="btn btn-info btn-primary-custom" asp-action="MultiAlumno">Volver</a>
-    <button type="submit" class="btn btn-danger btn-primary-custom" asp-action="Borrar">Borrar</button>
 </form>

@@ -17,7 +17,7 @@ namespace EscuelaWeb.Controllers
         }
         public IActionResult Index(string Id)
         {
-            ViewBag.Fecha = DateTime.Now.ToString();
+            
             if (!string.IsNullOrEmpty(Id))
             {
                 var Carreras = from Carrera in context.Carreras
@@ -52,18 +52,18 @@ namespace EscuelaWeb.Controllers
             modelo.PaginaActual = pagina;
             modelo.TotalDeRegistros = totalDeRegistros;
             modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
-            ViewBag.Fecha = DateTime.Now.ToString();
+            
             return View(modelo);
         }
         public IActionResult Create()
         {
-            ViewBag.Fecha = DateTime.Now.ToString();
+            
             return View();
         }
         [HttpPost]
         public IActionResult Create(Carrera nuevoCarrera)
         {
-            ViewBag.Fecha = DateTime.Now.ToString();
+            
             if (!ModelState.IsValid)
             {
                 return View(nuevoCarrera);
@@ -91,7 +91,7 @@ namespace EscuelaWeb.Controllers
         [HttpGet]
         public IActionResult Editar(string Id)
         {
-            ViewBag.Fecha = DateTime.Now.ToString();
+            
             var Carreras = from Carrera in context.Carreras
                          where Carrera.Id == Id
                          select Carrera;

@@ -20,11 +20,28 @@ namespace EscuelaWeb.Controllers
         }
 
         // GET: Evaluacion
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pagina)
         {
-            var escuelaContext = _context.Evalucaiones.Include(e => e.Alumno).Include(e => e.Asignatura)
-                                .OrderBy(e => e.Alumno.Nombre).ThenBy(e => e.Asignatura.Nombre).ThenBy(e => e.TipoEvaluacion);
-            return View(await escuelaContext.ToListAsync());
+            if (pagina == 0)
+            {
+                pagina = 1;
+            }
+            var cantidadRegistrosPorPagina = 10;
+            var evaluaciones = await _context.Evalucaiones.Include(e => e.Alumno).Include(e => e.Asignatura)
+                                .OrderBy(e => e.Alumno.Nombre).ThenBy(e => e.Asignatura.Nombre).ThenBy(e => e.TipoEvaluacion)
+                                .Skip((pagina - 1) * cantidadRegistrosPorPagina)
+                                //take only 10 (page size) items
+                                .Take(cantidadRegistrosPorPagina)
+
+                                //call ToList() at the end to execute the query and return the result set
+                                .ToListAsync(); ;
+            var totalDeRegistros = _context.Evalucaiones.Count();
+            var modelo = new EvaluacionesViewModel();
+            modelo.listado = evaluaciones;
+            modelo.PaginaActual = pagina;
+            modelo.TotalDeRegistros = totalDeRegistros;
+            modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
+            return View(modelo);
         }
         // GET: Evaluacion/Create
         public async Task<IActionResult> Create()

@@ -1,4 +1,4 @@
-@model IEnumerable<EscuelaWeb.Models.Evaluacion>
+@model EvaluacionesViewModel
 
 @{
     ViewData["Title"] = "Información de las Evaluaciones";
@@ -10,20 +10,21 @@
 <p>
     <a class="btn btn-success btn-primary-custom" type="submit" asp-action="Create">Crear nueva evaluación</a>
 </p>
+<input type="hidden" value="@Model.PaginaActual" />
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Alumno)
+                Alumno
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Asignatura)
+                Asignatura
             </th>
             <th>
                 Tipo de evaluación
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nota)
+                Nota
             </th>
             <th>
                 Acciones
@@ -32,7 +33,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.listado)
         {
             <tr>
                 <td>
@@ -55,3 +56,4 @@
         }
     </tbody>
 </table>
+<partial name="_paginador" model=@Model />

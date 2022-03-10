@@ -24,8 +24,8 @@
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Enviar" class="btn btn-primary" />
-                <a class="btn btn-info btn-primary-custom" asp-action="Index">Volver</a>
+                <input type="submit" asp-route-pagina="@ViewBag.Pagina" value="Enviar" class="btn btn-primary" />
+                <a class="btn btn-info btn-primary-custom" asp-route-pagina="@ViewBag.Pagina" asp-action="Index">Volver</a>
             </div>
         </form>
     </div>

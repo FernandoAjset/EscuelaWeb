@@ -31,7 +31,7 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <a class="btn btn-info btn-primary-custom" asp-action="Index">Volver</a>
+        <a class="btn btn-info btn-primary-custom" asp-route-pagina="@ViewBag.Pagina" asp-action="Index">Volver</a>
         <button type="submit" class="btn btn-danger btn-primary-custom" asp-action="Delete">Borrar</button>
     </form>
 </div>

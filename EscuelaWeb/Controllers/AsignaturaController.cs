@@ -15,11 +15,31 @@ namespace EscuelaWeb.Controllers
         }
 
         // GET: Asignatura
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pagina)
         {
+            if (pagina == 0)
+            {
+                pagina = 1;
+            }
+            var cantidadRegistrosPorPagina = 10;
+            var asignaturas = await _context.Asignaturas.Include(a => a.Carrera)
+                .OrderBy(a => a.Carrera.Nombre).ThenBy(a => a.Nombre)
+                //skip items before current page
+                .Skip((pagina - 1) * cantidadRegistrosPorPagina)
 
-            var asignaturas = _context.Asignaturas.Include(a => a.Carrera).OrderBy(a => a.Carrera.Nombre).ThenBy(a => a.Nombre);
-            return View(asignaturas);
+                //take only 10 (page size) items
+                .Take(cantidadRegistrosPorPagina)
+
+                //call ToList() at the end to execute the query and return the result set
+                .ToListAsync();
+            var totalDeRegistros = _context.Asignaturas.Count();
+            var modelo = new AsignaturasViewModel();
+            modelo.listado = asignaturas;
+            modelo.PaginaActual = pagina;
+            modelo.TotalDeRegistros = totalDeRegistros;
+            modelo.RegistrosPorPagina = cantidadRegistrosPorPagina;
+
+            return View(modelo);
         }
 
         // GET: Asignatura/Details/5
@@ -82,7 +102,7 @@ namespace EscuelaWeb.Controllers
         }
 
         // GET: Asignatura/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string id, int PaginaActual)
         {
             if (id == null)
             {
@@ -95,6 +115,7 @@ namespace EscuelaWeb.Controllers
                 return NotFound();
             }
             ViewData["CarreraId"] = new SelectList(_context.Carreras.OrderBy(c => c.Nombre), "Id", "Nombre", asignatura.CarreraId);
+            ViewData["Pagina"] = PaginaActual;
             return View(asignatura);
         }
 
@@ -103,7 +124,7 @@ namespace EscuelaWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("CarreraId,CarreraNombre,Id,Nombre")] Asignatura asignatura)
+        public async Task<IActionResult> Edit(string id, int pagina, [Bind("CarreraId,CarreraNombre,Id,Nombre")] Asignatura asignatura)
         {
             if (id != asignatura.Id)
             {
@@ -150,7 +171,7 @@ namespace EscuelaWeb.Controllers
         }
 
         // GET: Asignatura/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string id, int PaginaActual)
         {
             if (id == null)
             {
@@ -164,7 +185,7 @@ namespace EscuelaWeb.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["Pagina"] = PaginaActual;
             return View(asignatura);
         }
 
